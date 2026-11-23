@@ -1,8 +1,5 @@
 {
   "name": "from-trend-to-future",
   "private": true,
-  "type": "module",
-  "dependencies": {
-    "@anthropic-ai/sdk": "^1.12.0"
-  }
+  "type": "module"
 }

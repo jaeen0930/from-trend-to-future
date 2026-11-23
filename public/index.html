@@ -24,6 +24,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans
 .mast h1 span{font-weight:300}
 .mast nav{display:flex;gap:18px;padding-bottom:.6em}
 .ln{font:inherit;font-size:14px;background:none;border:0;padding:10px 0;color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px;min-height:44px}
+a.ln{display:inline-flex;align-items:center}
 .ln:hover{text-decoration-thickness:2px}
 button:focus-visible,textarea:focus-visible,input:focus-visible,[contenteditable]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .form{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--ink)}
@@ -97,7 +98,10 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
   <div class="main">
     <span class="lb">사례</span>
     <textarea id="caseIn" placeholder="사례 이름, 기사, 메모"></textarea>
-    <div class="row"><button class="go" id="go" type="button" disabled>분석</button><button class="ln" id="pick" type="button">이미지 첨부</button><span class="thumb" id="thumb" hidden><img id="thumbImg" alt=""><button class="ln" id="unpick" type="button">빼기</button></span><span class="status" id="status"></span></div>
+    <div class="row"><button class="go" id="copyPrompt" type="button">프롬프트 복사</button><a class="ln" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT 열기</a><a class="ln" href="https://claude.ai/new" target="_blank" rel="noopener">Claude 열기</a><button class="ln" id="pick" type="button">이미지 첨부</button><span class="thumb" id="thumb" hidden><img id="thumbImg" alt=""><button class="ln" id="unpick" type="button">빼기</button></span></div>
+    <span class="lb" style="margin-top:10px">결과 붙여넣기</span>
+    <textarea id="resIn" style="min-height:110px" placeholder="ChatGPT나 Claude가 준 답을 그대로 붙여 넣기"></textarea>
+    <div class="row"><button class="go" id="go" type="button">시트 만들기</button><span class="status" id="status"></span></div>
     <input type="file" id="file" accept="image/*" hidden>
   </div>
 </section>
@@ -134,7 +138,6 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const api=/^https?:$/.test(location.protocol)&&!/claude\.ai|claudeusercontent|claude\.site/.test(location.hostname);
 let data=structuredClone(EXAMPLE),sample=null,downloads=null,busy=false,curId=null,imgBlob=null;
 
 const get=(o,p)=>p.split(".").reduce((a,k)=>a?.[k],o);
@@ -210,41 +213,21 @@ ${focus?`\n[분석 초점]\n${focus}\n`:""}${hasImg?"\n첨부 이미지도 사�
 const valid=o=>o?.case&&o.keywords&&o.hev?.from&&o.hev?.trend&&o.future?.reinforce&&o.future?.expand;
 function setStatus(t,err){const s=$("#status");s.textContent=t;s.classList.toggle("err",!!err)}
 
-async function toB64(f){
-  const bmp=await createImageBitmap(f);const s=Math.min(1,1568/Math.max(bmp.width,bmp.height));
-  const c=document.createElement("canvas");c.width=Math.round(bmp.width*s);c.height=Math.round(bmp.height*s);
-  c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);return c.toDataURL("image/jpeg",.85).split(",")[1];
+function parseResult(raw){
+  const a=raw.indexOf("{"),b=raw.lastIndexOf("}");if(a<0||b<a)throw{message:"JSON이 안 보여요. 답 전체를 복사해 붙여 주세요."};
+  let o;try{o=JSON.parse(raw.slice(a,b+1))}catch(e){throw{message:"답을 읽지 못했어요. 답 전체를 그대로 붙여 주세요."}}
+  if(!valid(o))throw{message:"빠진 칸이 있어요. AI에게 '형식 그대로 JSON만 다시' 라고 해 주세요."};return o;
 }
-async function viaApi(text,focus,fm){
-  const body={caseText:text,focus,mode:fm};
-  if(imgBlob)body.image={type:"image/jpeg",data:await toB64(imgBlob)};
-  const res=await fetch("/api/ftf",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
-  if(res.status===429)throw{code:"rate_limited"};
-  if(!res.ok){let m="";try{m=(await res.json()).error}catch(e){}throw{message:m||`서버 오류 (${res.status})`}}
-  const rd=res.body.getReader(),dec=new TextDecoder();let out="";
-  for(;;){const{done,value}=await rd.read();if(done)break;out+=dec.decode(value,{stream:true});setStatus(`작성 중 · ${out.length.toLocaleString()}자`)}
-  if(out.includes("[[ERROR]]"))throw{message:"분석에 실패했어요. 다시 눌러 주세요."};
-  return out;
-}
-async function generate(){
-  const text=$("#caseIn").value.trim();if(!text||busy||!(sample||api))return;
-  busy=true;$("#go").disabled=true;setStatus("분석 중");$("#sheet")?.classList.add("loading");
-  try{
-    const fm="sota",focus="";
-    let raw;
-    if(sample){
-      const opts={modelTier:"complex",cache:false,onText:({text})=>{if(text&&text!=="Thinking...")setStatus(`작성 중 · ${text.length.toLocaleString()}자`)}};
-      if(imgBlob)opts.images=[imgBlob];
-      raw=(await sample(PROMPT(text,focus,fm,!!imgBlob),opts)).text||"";
-    }else raw=await viaApi(text,focus,fm);
-    const a=raw.indexOf("{"),b=raw.lastIndexOf("}");
-    const o=JSON.parse(raw.slice(a,b+1));
-    if(!valid(o))throw{message:"덜 채워져 왔어요. 다시 눌러 주세요."};
-    if(imgUrl)o.img=imgUrl;data=o;curId=Date.now();render();saveHist();setStatus("완료. 글자를 눌러 고칠 수 있어요.");
-  }catch(e){
-    render();const c=e?.code;
-    setStatus(c==="not_granted"?"Claude 사용 허락이 필요해요. 다시 눌러 주세요.":c==="rate_limited"?"요청이 많아요. 1분 뒤 다시.":(e instanceof SyntaxError?"결과를 읽지 못했어요. 다시 눌러 주세요.":(e?.message||"실패했어요. 다시 눌러 주세요.")),true);
-  }finally{busy=false;$("#go").disabled=!(sample||api)}
+$("#copyPrompt").onclick=async()=>{
+  const text=$("#caseIn").value.trim();if(!text){setStatus("사례를 먼저 넣어 주세요.",true);return}
+  let p=PROMPT(text,"","sota",!!imgBlob);if(imgBlob)p+="\n\n(사례 이미지를 이 대화에 함께 첨부했다.)";
+  const b=$("#copyPrompt");try{await navigator.clipboard.writeText(p);b.textContent="복사됨";setStatus(imgBlob?"AI 창에 붙여 넣고 이미지도 같이 올려 주세요.":"AI 창에 붙여 넣어 주세요.")}catch(e){b.textContent="복사 안 됨"}
+  setTimeout(()=>b.textContent="프롬프트 복사",1600);
+};
+function generate(){
+  try{const o=parseResult($("#resIn").value);if(imgUrl)o.img=imgUrl;data=o;curId=Date.now();render();saveHist();$("#resIn").value="";
+    setStatus("완료. 글자를 눌러 고칠 수 있어요.");$("#out").scrollIntoView({behavior:"smooth"})}
+  catch(e){setStatus(e.message||"실패했어요.",true)}
 }
 function saveHist(){if(!curId)return;let h=store.get("ftf-hist2",[]).filter(x=>x.id!==curId);h.unshift({id:curId,t:new Date().toISOString(),data});store.set("ftf-hist2",h.slice(0,30))}
 function openHist(){
@@ -261,8 +244,8 @@ $("#histBtn").onclick=openHist;$("#dlgClose").onclick=()=>$("#dlg").close();
 
 $("#caseIn").value=store.get("ftf-draft","");
 $("#caseIn").addEventListener("input",()=>store.set("ftf-draft",$("#caseIn").value));
-$("#caseIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
 $("#go").onclick=generate;
+$("#resIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
 let imgUrl=null;
 async function takeImg(f){if(!f||!f.type?.startsWith("image/"))return;
   try{const bmp=await createImageBitmap(f),k=Math.min(1,1200/Math.max(bmp.width,bmp.height)),c=document.createElement("canvas");
@@ -293,13 +276,7 @@ $("#png").onclick=async()=>{
 };
 
 render();
-(async()=>{
-  if(api){$("#saveMd").hidden=false;$("#png").hidden=false;$("#go").disabled=false;return}
-  for(let k=0;k<50&&!window.claude?.use;k++)await new Promise(r=>setTimeout(r,200));
-  if(window.claude?.use){try{[sample,downloads]=await Promise.all([claude.use("sample").catch(()=>null),claude.use("downloads").catch(()=>null)])}catch(e){}}
-  if(downloads){$("#saveMd").hidden=false;$("#png").hidden=false}
-  if(sample){$("#go").disabled=false;}
-  else setStatus("분석 기능을 불러오지 못했어요.",true);
+(()=>{$("#saveMd").hidden=false;$("#png").hidden=false;
 })();
 }
 </script>

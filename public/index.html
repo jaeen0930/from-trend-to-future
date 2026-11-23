@@ -26,10 +26,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans
 .ln{font:inherit;font-size:14px;background:none;border:0;padding:10px 0;color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px;min-height:44px}
 .ln:hover{text-decoration-thickness:2px}
 button:focus-visible,textarea:focus-visible,input:focus-visible,[contenteditable]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:0;border-bottom:1px solid var(--ink)}
+.form{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--ink)}
 .form>div{padding:20px 0}
 .form .side{padding-right:24px;border-right:1px solid var(--rule);display:grid;gap:18px;align-content:start}
-.form .main{padding-left:24px;display:grid;gap:14px}
+.form .main{display:grid;gap:14px}
 .lb{font-size:13px;font-weight:600}
 textarea,input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--ink);padding:12px 14px;width:100%}
 textarea{min-height:150px;resize:vertical;line-height:1.6}
@@ -91,17 +91,6 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
 </header>
 
 <section class="form pad">
-  <div class="side">
-    <div class="opt"><span class="lb">From 기준</span>
-      <label><input type="radio" name="fm" value="sota" checked> 직전 최신 기술</label>
-      <label><input type="radio" name="fm" value="human"> 사람이 하던 방식</label>
-    </div>
-    <div class="opt"><span class="lb">초점</span><input type="text" id="focus" placeholder="선택"></div>
-    <div id="imgWrap" hidden><span class="lb">이미지</span>
-      <div class="file"><button class="ln" id="pick" type="button">파일 고르기</button><span id="imgName"></span></div>
-      <input type="file" id="file" accept="image/*" hidden>
-    </div>
-  </div>
   <div class="main">
     <span class="lb">사례</span>
     <textarea id="caseIn" placeholder="사례 이름, 기사, 메모"></textarea>
@@ -131,8 +120,8 @@ const EXAMPLE={
   headline:"이동 중 업무 흐름을 이어주는\n차량 Work AI Agent의\n선제형 맥락 오케스트레이션",
   description:"Cerence AI와 Microsoft의 Mobile Work AI Agent는 차량 안에서 Outlook 캘린더, Teams, OneNote 같은 업무 도구와 주행 맥락을 연결한다. 사용자가 말하기 전에 다음 회의 장소로의 이동이나 업무 전환을 먼저 제안하고, 음성만으로 회의 참여와 메일 작성이 이어진다."},
  keywords:{from:"도메인 분절",trend:"도메인 통합",future:"도메인 확장"},
- hev:{from:{h:"캘린더·내비게이션·업무 앱이 **각각 독립된 시스템**으로 작동해 서로의 데이터를 참조하지 못하며",e:"일정이 바뀌면 탑승자가 스마트폰으로 직접 확인한 뒤 **내비게이션을 다시 검색·입력**해야 해",v:"탑승자는 이동 시간을 업무와 **단절된 공백**으로, 차량을 수동으로 다뤄야 하는 기능의 집합으로 인식한다"},
-  trend:{h:"차량 AI가 캘린더·업무 도구·내비게이션·주행 상태를 **하나의 업무 맥락 레이어**로 통합 해석하며",e:"발화 없이도 일정 기반 내비가 시작되고, 음성만으로 회의 참여·메일 작성·일정 확인이 **연속 처리**되어",v:"탑승자는 이동 시간을 낭비가 아닌 **업무 연속성이 유지되는 생산적 공간**으로 인식한다"}},
+ hev:{from:{h:"캘린더·내비게이션·업무 앱이 **각각 독립된 시스템**으로 작동하여",e:"일정이 바뀌면 탑승자가 스마트폰으로 직접 확인한 뒤 **내비게이션을 다시 검색·입력**하여",v:"탑승자는 이동 시간을 업무와 **단절된 공백**으로 인식한다"},
+  trend:{h:"차량 AI가 캘린더·업무 도구·내비게이션·주행 상태를 **하나의 업무 맥락 레이어**로 통합 해석하여",e:"일정 기반 내비를 먼저 시작하고 회의 참여·메일 작성을 음성만으로 **연속 처리**하여",v:"탑승자는 이동 시간을 **업무 연속성이 유지되는 생산적 공간**으로 인식한다"}},
  future:{reinforce:{keyword:"업무 공간 그 자체",text:"업무 도구 연결을 넘어 탑승자의 **집중도·피로도·감정 상태**까지 읽어 최적의 업무 환경을 선제적으로 세팅하고, 차량 자체가 하나의 완전한 업무 공간이 된다."},
   expand:{keyword:"생활의 연속성",text:"업무 도메인에 한정되던 연결이 운동·식사·공부·휴식 같은 **다양한 생활 도메인**으로 넓어져, 차 안에서 생활의 흐름이 끊기지 않는다."}}
 };
@@ -202,7 +191,7 @@ ${focus?`\n[분석 초점]\n${focus}\n`:""}${hasImg?"\n첨부 이미지도 사�
 - Trend = 입력된 사례 자체. ${mode==="sota"?"From = Trend 직전의 가장 앞선 양산·상용 수준(SOTA). 원시적인 수동 조작 같은 먼 과거로 내려가지 않는다.":"From = 같은 일을 사람이 직접 하던 방식."}
 - Future = Trend가 추구하는 본질을 밀어붙인 방향. 강화는 같은 도메인 안에서 Trend의 변화를 극한까지 밀었을 때, 확장은 같은 본질을 다른 도메인·맥락·대상으로 옮겼을 때. 솔루션이 아니라 기회의 방향으로 쓴다.
 - 키워드(from/trend/future)는 2~6자 명사구 세 개가 하나의 축 위에서 단계적으로 변해야 한다. 예: 도메인 분절 → 도메인 통합 → 도메인 확장 / 명령 후 실행형 → 선제 제안형 → 즉시 실행형 / 직접 수행 → 자동 수행 → 예방적 개입.
-- H(How, 무엇이 어떻게 작동하나)는 "~하며/~하여", E(Effect, 그래서 무엇이 일어나나)는 "~해/~되어", V(Value, 사용자가 무엇으로 인식·체감하나)는 "~로 인식한다/체감한다"로 끝나는 한 문장. From과 Trend의 같은 행은 같은 대상을 두고 대구가 되게. 바뀐 핵심어 1~2개만 **굵게**.
+- H(How, 무엇이 어떻게 작동하나)는 반드시 "~하여"로, E(Effect, 그래서 무엇이 일어나나)도 반드시 "~하여"로, V(Value, 사용자가 무엇으로 인식·체감하나)는 반드시 "~한다"로 끝난다. H·E·V를 이어 읽으면 "~하여 ~하여 ~한다"의 한 문장이 되어야 한다. "~하며", "~해", "~되어"로 끝내지 않는다. From과 Trend의 같은 행은 같은 대상을 두고 대구가 되게. 바뀐 핵심어 1~2개만 **굵게**.
 - 번호 매기기, 잘게 쪼개기 금지. 큰 개념으로 한 문장씩.
 - headline: 2~3줄(줄바꿈 \\n), 명사로 끝나는 무게 있는 제목. 예: "주행 중 실시간 데이터 환류로\\n플릿 전체의 판단력을 자기강화하는\\n차량 AI 학습 오케스트레이션"
 - description: 사례 설명 3~4문장, 사실만. 모르는 수치·연도는 지어내지 않는다.
@@ -237,7 +226,7 @@ async function generate(){
   const text=$("#caseIn").value.trim();if(!text||busy||!(sample||api))return;
   busy=true;$("#go").disabled=true;setStatus("분석 중");$("#sheet")?.classList.add("loading");
   try{
-    const fm=document.querySelector("input[name=fm]:checked").value,focus=$("#focus").value.trim();
+    const fm="sota",focus="";
     let raw;
     if(sample){
       const opts={modelTier:"complex",cache:false,onText:({text})=>{if(text&&text!=="Thinking...")setStatus(`작성 중 · ${text.length.toLocaleString()}자`)}};
@@ -270,8 +259,6 @@ $("#caseIn").value=store.get("ftf-draft","");
 $("#caseIn").addEventListener("input",()=>store.set("ftf-draft",$("#caseIn").value));
 $("#caseIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
 $("#go").onclick=generate;
-$("#pick").onclick=()=>$("#file").click();
-$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;imgBlob=f;$("#imgName").textContent=f.name};
 
 $("#copyMd").onclick=async()=>{const b=$("#copyMd");try{await navigator.clipboard.writeText(toMarkdown(data));b.textContent="복사됨"}catch(e){b.textContent="복사 안 됨"}setTimeout(()=>b.textContent="마크다운 복사",1500)};
 async function save(filename,blob){
@@ -289,11 +276,11 @@ $("#png").onclick=async()=>{
 
 render();
 (async()=>{
-  if(api){$("#saveMd").hidden=false;$("#png").hidden=false;$("#imgWrap").hidden=false;$("#go").disabled=false;return}
+  if(api){$("#saveMd").hidden=false;$("#png").hidden=false;$("#go").disabled=false;return}
   for(let k=0;k<50&&!window.claude?.use;k++)await new Promise(r=>setTimeout(r,200));
   if(window.claude?.use){try{[sample,downloads]=await Promise.all([claude.use("sample").catch(()=>null),claude.use("downloads").catch(()=>null)])}catch(e){}}
   if(downloads){$("#saveMd").hidden=false;$("#png").hidden=false}
-  if(sample){$("#go").disabled=false;try{const l=await sample.limits?.();if(l?.images)$("#imgWrap").hidden=false}catch(e){}}
+  if(sample){$("#go").disabled=false;}
   else setStatus("분석 기능을 불러오지 못했어요.",true);
 })();
 }

@@ -42,6 +42,9 @@ textarea::placeholder,input::placeholder{color:var(--mute)}
 .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .go{font:inherit;font-weight:700;font-size:16px;background:var(--ink);color:var(--bg);border:0;min-height:52px;padding:0 36px;cursor:pointer}
 .go:disabled{opacity:.35;cursor:default}
+.thumb{display:inline-flex;gap:10px;align-items:center}.thumb img{height:44px;width:auto;max-width:80px;object-fit:cover;border:1px solid var(--ink)}
+.drag textarea{border-style:dashed;border-width:2px}
+.fig{margin:0;border:1px solid var(--rule)}.fig img{display:block;width:100%;max-height:220px;object-fit:cover}
 .status{font-size:13px;color:var(--mute)}
 .status.err{color:var(--ink);font-weight:600}
 .tools{display:flex;gap:20px;justify-content:flex-end;flex-wrap:wrap;padding-top:8px}
@@ -94,7 +97,8 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
   <div class="main">
     <span class="lb">사례</span>
     <textarea id="caseIn" placeholder="사례 이름, 기사, 메모"></textarea>
-    <div class="row"><button class="go" id="go" type="button" disabled>분석</button><span class="status" id="status"></span></div>
+    <div class="row"><button class="go" id="go" type="button" disabled>분석</button><button class="ln" id="pick" type="button">이미지 첨부</button><span class="thumb" id="thumb" hidden><img id="thumbImg" alt=""><button class="ln" id="unpick" type="button">빼기</button></span><span class="status" id="status"></span></div>
+    <input type="file" id="file" accept="image/*" hidden>
   </div>
 </section>
 
@@ -142,7 +146,7 @@ function render(){
   $("#out").innerHTML=`<article class="sheet" id="sheet">
     <div class="head">
       <div>${ed("case.headline","h2","ttl")}<div class="src">${ed("case.source","span")}</div></div>
-      ${ed("case.description","p","desc")}
+      <div style="display:grid;gap:14px">${data.img?`<figure class="fig"><img src="${data.img}" alt="사례 이미지"></figure>`:""}${ed("case.description","p","desc")}</div>
     </div>
     <div class="tbl">
       <div class="ch"></div>
@@ -236,7 +240,7 @@ async function generate(){
     const a=raw.indexOf("{"),b=raw.lastIndexOf("}");
     const o=JSON.parse(raw.slice(a,b+1));
     if(!valid(o))throw{message:"덜 채워져 왔어요. 다시 눌러 주세요."};
-    data=o;curId=Date.now();render();saveHist();setStatus("완료. 글자를 눌러 고칠 수 있어요.");
+    if(imgUrl)o.img=imgUrl;data=o;curId=Date.now();render();saveHist();setStatus("완료. 글자를 눌러 고칠 수 있어요.");
   }catch(e){
     render();const c=e?.code;
     setStatus(c==="not_granted"?"Claude 사용 허락이 필요해요. 다시 눌러 주세요.":c==="rate_limited"?"요청이 많아요. 1분 뒤 다시.":(e instanceof SyntaxError?"결과를 읽지 못했어요. 다시 눌러 주세요.":(e?.message||"실패했어요. 다시 눌러 주세요.")),true);
@@ -259,6 +263,20 @@ $("#caseIn").value=store.get("ftf-draft","");
 $("#caseIn").addEventListener("input",()=>store.set("ftf-draft",$("#caseIn").value));
 $("#caseIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
 $("#go").onclick=generate;
+let imgUrl=null;
+async function takeImg(f){if(!f||!f.type?.startsWith("image/"))return;
+  try{const bmp=await createImageBitmap(f),k=Math.min(1,1200/Math.max(bmp.width,bmp.height)),c=document.createElement("canvas");
+    c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    imgUrl=c.toDataURL("image/jpeg",.82);imgBlob=await new Promise(r=>c.toBlob(r,"image/jpeg",.82))}catch(e){setStatus("이미지를 읽지 못했어요.",true);return}
+  $("#thumbImg").src=imgUrl;$("#thumb").hidden=false;$("#pick").hidden=true}
+$("#pick").onclick=()=>$("#file").click();
+$("#file").onchange=e=>{takeImg(e.target.files[0]);e.target.value=""};
+$("#unpick").onclick=()=>{imgBlob=null;imgUrl=null;$("#thumb").hidden=true;$("#pick").hidden=false};
+const main=document.querySelector(".form .main");
+main.addEventListener("dragover",e=>{e.preventDefault();main.classList.add("drag")});
+main.addEventListener("dragleave",()=>main.classList.remove("drag"));
+main.addEventListener("drop",e=>{e.preventDefault();main.classList.remove("drag");takeImg(e.dataTransfer.files[0])});
+$("#caseIn").addEventListener("paste",e=>{const f=[...(e.clipboardData?.files||[])].find(x=>x.type.startsWith("image/"));if(f){e.preventDefault();takeImg(f)}});
 
 $("#copyMd").onclick=async()=>{const b=$("#copyMd");try{await navigator.clipboard.writeText(toMarkdown(data));b.textContent="복사됨"}catch(e){b.textContent="복사 안 됨"}setTimeout(()=>b.textContent="마크다운 복사",1500)};
 async function save(filename,blob){

@@ -5,89 +5,115 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>From Trend to Future</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* VOICE  printed analysis sheet, black ink, no decoration
-   IDEA   a poster masthead over a ruled worksheet
-   PICTURE the title itself, set huge and condensed; the Future column inverted
-   COLOUR white and black only
-   TYPE   Archivo condensed for Latin display, IBM Plex Sans KR for Korean */
-:root{color-scheme:light;--bg:#ffffff;--ink:#0d0d0d;--mute:#707070;--rule:#d6d6d6;--soft:#f3f3f3}
+/* VOICE  quiet analysis worksheet, black ink on white
+   IDEA   a bound FTT analysis report: one sheet per step of the guide
+   PICTURE the numbered From→Trend matrix and the Why ladder, drawn from the data
+   COLOUR white, black, one soft grey for the Future side
+   TYPE   Archivo condensed for Latin labels, IBM Plex Sans KR for Korean */
+:root{color-scheme:light;--bg:#ffffff;--ink:#0d0d0d;--mute:#6f6f6f;--rule:#dadada;--soft:#f3f3f3}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0f0f0f;--ink:#f2f2f0;--mute:#8f8f8f;--rule:#333;--soft:#1a1a1a}}
 :root[data-theme=dark]{color-scheme:dark;--bg:#0f0f0f;--ink:#f2f2f0;--mute:#8f8f8f;--rule:#333;--soft:#1a1a1a}
 *{box-sizing:border-box;min-width:0;border-radius:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans KR",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
-.x{font-family:Archivo,"IBM Plex Sans KR",sans-serif;font-stretch:62%;font-weight:800;letter-spacing:-.01em;line-height:.88}
+.x{font-family:Archivo,"IBM Plex Sans KR",sans-serif;font-stretch:62%;font-weight:700;letter-spacing:-.005em;line-height:1}
 .pad{padding-inline:max(3.2vw,16px)}
 .mast{padding-top:28px;padding-bottom:20px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--rule)}
-.mast .ln{flex:none;white-space:nowrap}.mast h1{margin:0;font-size:clamp(34px,4vw,52px);font-weight:700}
-.mast h1 span{font-weight:300}
-.mast nav{display:flex;gap:18px;padding-bottom:.6em}
-.ln{font:inherit;font-size:14px;background:none;border:0;padding:10px 0;color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px;min-height:44px}
-a.ln{display:inline-flex;align-items:center}
+.mast h1{margin:0;font-size:clamp(34px,4vw,52px);font-weight:700}.mast h1 span{font-weight:300}
+.ln{font:inherit;font-size:14px;background:none;border:0;padding:10px 0;color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px;min-height:44px;flex:none;white-space:nowrap}
 .ln:hover{text-decoration-thickness:2px}
-button:focus-visible,textarea:focus-visible,input:focus-visible,[contenteditable]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button:focus-visible,textarea:focus-visible,a:focus-visible,[contenteditable]:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,48px);padding-top:28px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
 .col{display:grid;gap:10px;align-content:start}
-.hint{font-size:13px;color:var(--mute)}.hint a{color:var(--ink)}
-.form>div{padding:20px 0}
-.form .side{padding-right:24px;border-right:1px solid var(--rule);display:grid;gap:18px;align-content:start}
-.form .main{display:grid;gap:14px}
 .lb{font-size:13px;font-weight:600}
-textarea,input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);padding:12px 14px;width:100%}
-textarea{min-height:170px;resize:vertical;line-height:1.6}
-textarea::placeholder,input::placeholder{color:var(--mute)}
-.opt{display:grid;gap:2px}
-.opt label{display:flex;gap:10px;align-items:center;font-size:14px;min-height:36px;cursor:pointer}
-.opt input[type=radio]{accent-color:var(--ink);width:16px;height:16px;margin:0}.opt input[type=text]{width:100%;min-height:44px}
-.file{font-size:14px;display:flex;gap:10px;align-items:center;min-height:44px}
-.file img{width:44px;height:32px;object-fit:cover}
+.hint{font-size:13px;color:var(--mute)}.hint a{color:var(--ink)}
+textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);padding:12px 14px;width:100%;min-height:170px;resize:vertical;line-height:1.6}
+textarea::placeholder{color:var(--mute)}
 .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .go{font:inherit;font-weight:600;font-size:15px;background:var(--ink);color:var(--bg);border:0;min-height:46px;padding:0 24px;cursor:pointer}
-.go:disabled{opacity:.35;cursor:default}
-.thumb{display:inline-flex;gap:10px;align-items:center}.thumb[hidden]{display:none}.thumb img{height:44px;width:auto;max-width:80px;object-fit:cover;border:1px solid var(--ink)}
-.drag #caseIn{border-style:dashed;border-width:2px}
-.fig{margin:0;border:1px solid var(--rule)}.fig img{display:block;width:100%;max-height:220px;object-fit:cover}
-.status{font-size:13px;color:var(--mute)}
-.status.err{color:var(--ink);font-weight:600}
-.tools{display:flex;gap:20px;justify-content:flex-end;flex-wrap:wrap;padding-top:8px}
-.sheet{margin:12px 0 80px;background:var(--bg);padding:clamp(18px,2.6vw,36px);border:1px solid var(--rule);display:flex;flex-direction:column;gap:20px}
-@media(min-width:1100px){.sheet{aspect-ratio:297/210}}
-.sheet.loading{opacity:.35}
-.head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:end}
-.ttl{font-size:clamp(22px,2.2vw,30px);line-height:1.22;font-weight:700;letter-spacing:-.02em;margin:0;white-space:pre-line;text-wrap:balance}
+.thumb{display:inline-flex;gap:10px;align-items:center}.thumb[hidden]{display:none}.thumb img{height:44px;max-width:80px;object-fit:cover;border:1px solid var(--ink)}
+.drag #caseIn{border:2px dashed var(--ink)}
+.status{font-size:13px;color:var(--mute)}.status.err{color:var(--ink);font-weight:600}
+.tools{display:flex;gap:20px;justify-content:space-between;align-items:center;flex-wrap:wrap;padding-top:8px}
+.toc{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}.toc a{color:var(--mute);text-decoration:none;min-height:36px;display:inline-flex;align-items:center}.toc a:hover{color:var(--ink)}
+.tools .r{display:flex;gap:20px;flex-wrap:wrap}
+#out{display:grid;gap:20px;padding-bottom:80px;margin-top:8px}
+.sheet{background:var(--bg);padding:clamp(18px,2.6vw,36px);border:1px solid var(--rule);display:grid;gap:18px;scroll-margin-top:16px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--ink);padding-bottom:10px}
+.sh h2{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.sh h2 small{font-weight:400;color:var(--mute);font-size:14px;margin-left:8px}
+.sh .ln{min-height:32px;padding:4px 0;font-size:13px;color:var(--mute)}
+.head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:start}
+.ttl{font-size:clamp(22px,2.2vw,30px);line-height:1.24;font-weight:700;letter-spacing:-.02em;margin:0;white-space:pre-line;text-wrap:balance}
 .desc{margin:0;font-size:15px;white-space:pre-line}
 .src{font-size:13px;color:var(--mute);margin-top:10px}
-.tbl{display:grid;grid-template-columns:36px repeat(3,minmax(0,1fr));grid-template-rows:auto repeat(3,1fr);border-top:1px solid var(--ink);flex:1;font-size:14.5px;line-height:1.62}
-.tbl>div{padding:12px 16px;border-bottom:1px solid var(--rule)}
-.tbl .ch{padding-top:14px;border-bottom:1px solid var(--ink)}
-.tbl .ch .x{font-size:clamp(22px,2vw,28px);display:block}
-.tbl .kw{display:block;font-weight:700;font-size:16px;margin-top:6px}
-.tbl .rk{padding-left:0;padding-right:0;font-family:Archivo;font-stretch:62%;font-weight:700;font-size:18px;line-height:1.3}
-.tbl .t{white-space:pre-line}
-.tbl .fr{color:var(--mute)}
-.tbl .fr b{color:var(--ink)}
-.tbl .fu{background:var(--soft);border-left:2px solid var(--ink)}
-.tbl .fu.body{grid-column:4;grid-row:2 / span 3;display:grid;gap:20px;align-content:start;padding-top:16px}
-.tbl .fu h4{margin:0 0 6px;font-size:13px;font-weight:700;display:flex;gap:8px;align-items:baseline}
-.tbl .fu h4 .x{font-size:17px;font-weight:700}
-.tbl .fu p{margin:0;white-space:pre-line}
-.foot{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--mute);border-top:1px solid var(--rule);padding-top:10px}
-[contenteditable]{outline-offset:2px}
+.fig{margin:0 0 14px;border:1px solid var(--rule)}.fig img{display:block;width:100%;max-height:240px;object-fit:cover}
+.facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border-top:1px solid var(--rule)}
+.facts li{padding:14px 16px 16px 0;border-bottom:1px solid var(--rule);display:grid;gap:4px;align-content:start}
+.facts .x{font-size:15px;color:var(--mute)}
+.facts b{font-size:15px}
+.facts p{margin:0;font-size:14.5px}
+.mx{display:grid;grid-template-columns:30px minmax(0,1fr) minmax(0,1fr);font-size:14.5px;line-height:1.7}
+.mx>div{padding:12px 16px;border-bottom:1px solid var(--rule)}
+.mx .ch{border-bottom:1px solid var(--ink);padding-top:4px}
+.mx .ch .x{font-size:22px}
+.mx .rk{padding-inline:0;font-family:Archivo;font-stretch:62%;font-weight:700;font-size:18px;line-height:1.5}
+.mx .fr{color:var(--mute)}.mx .fr b{color:var(--ink)}
+.mx .tr{background:var(--soft)}
+.n{display:inline-grid;place-items:center;min-width:19px;height:19px;padding:0 4px;margin:0 3px 0 1px;font:600 11px/1 Archivo,sans-serif;border:1px solid currentColor;border-radius:10px;vertical-align:2px}
+.map{width:100%;border-collapse:collapse;font-size:14px}
+.map th{text-align:left;font-weight:600;font-size:12.5px;color:var(--mute);padding:8px 12px 8px 0;border-bottom:1px solid var(--ink)}
+.map td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.map td:first-child{width:44px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,44px)}
+.kv{display:grid;gap:0;border-top:1px solid var(--rule)}
+.kv div{padding:12px 0;border-bottom:1px solid var(--rule);display:grid;gap:3px}
+.kv span{font-size:12.5px;color:var(--mute);font-weight:600}
+.kv p{margin:0;font-size:15px}
+.ar{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.ar li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:4px 10px;padding-bottom:16px;position:relative}
+.ar li::before{content:"";position:absolute;left:14px;top:30px;bottom:0;width:1px;background:var(--rule)}
+.ar li:last-child::before{display:none}
+.ar .q{font:700 15px/1 Archivo,sans-serif;font-stretch:62%;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--ink);border-radius:50%;background:var(--bg);position:relative}
+.ar b{font-size:15px;align-self:center}
+.ar p{grid-column:2;margin:0;font-size:14.5px;color:var(--mute)}
+.root{background:var(--soft);padding:18px 20px;display:grid;gap:8px;border-left:2px solid var(--ink)}
+.root span{font-size:12.5px;color:var(--mute);font-weight:600}
+.root .big{font-size:clamp(17px,1.6vw,20px);font-weight:700;line-height:1.45;margin:0}
+.root .sm{font-size:14.5px;margin:0}
+.seeds h3{margin:0 0 4px;font-size:15px;display:flex;gap:10px;align-items:baseline}
+.seeds h3 small{font-weight:400;color:var(--mute);font-size:13px}
+.sl{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.sl li{padding:12px 0;border-bottom:1px solid var(--rule);display:grid;gap:3px}
+.sl b{font-size:15px}
+.sl p{margin:0;font-size:14px;color:var(--mute)}
+.tag{font-size:12px;font-weight:600;border:1px solid var(--ink);padding:1px 7px;margin-right:6px;white-space:nowrap}
+.dirs{display:grid;gap:0}
+.dir{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px clamp(20px,3vw,44px);padding:22px 0;border-bottom:1px solid var(--rule)}
+.dir:first-child{padding-top:4px}
+.dir .qh{grid-column:1 / -1;display:grid;gap:6px}
+.dir .qh .meta{font-size:13px;color:var(--mute)}
+.dir .qh h3{margin:0;font-size:clamp(18px,1.8vw,22px);line-height:1.4;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.hev3{display:grid;grid-template-columns:24px minmax(0,1fr);font-size:14.5px;border-top:1px solid var(--ink)}
+.hev3>div{padding:9px 0;border-bottom:1px solid var(--rule)}
+.hev3 .rk{font:700 16px/1.6 Archivo,sans-serif;font-stretch:62%}
+.aidv{display:grid;align-content:start;gap:0;border-top:1px solid var(--ink);font-size:14px}
+.aidv div{display:grid;grid-template-columns:34px minmax(0,1fr);padding:9px 0;border-bottom:1px solid var(--rule)}
+.aidv div>b{font:700 14px/1.6 Archivo,sans-serif;font-stretch:62%}
+.angle{margin:12px 0 0;font-size:14px}.angle span{display:block;font-size:12.5px;color:var(--mute);font-weight:600;margin-bottom:2px}
 [contenteditable]:hover{background:var(--soft)}
-.fu [contenteditable]:hover{background:var(--bg)}
+.tr [contenteditable]:hover,.root [contenteditable]:hover{background:var(--bg)}
 dialog{border:1px solid var(--ink);background:var(--bg);color:var(--ink);padding:0;width:min(520px,92vw)}
 dialog::backdrop{background:rgb(0 0 0/.4)}
-.dh{display:flex;justify-content:space-between;align-items:center;padding:8px 20px;border-bottom:3px solid var(--ink)}
-.dh .x{font-size:30px}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:8px 20px;border-bottom:1px solid var(--ink);font-weight:700}
 .hist{list-style:none;margin:0;padding:0;max-height:60vh;overflow:auto}
 .hist li{display:flex;border-bottom:1px solid var(--rule)}
 .hist .o{flex:1;text-align:left;font:inherit;background:none;border:0;color:var(--ink);padding:14px 20px;cursor:pointer}
 .hist .o:hover{background:var(--soft)}
 .hist small{display:block;color:var(--mute);font-size:12px}
 .hist .d{background:none;border:0;color:var(--mute);width:52px;cursor:pointer;font-size:13px}
-@media(max-width:820px){.form{grid-template-columns:minmax(0,1fr)}.head{grid-template-columns:minmax(0,1fr)}
- .tbl{grid-template-columns:28px repeat(2,minmax(0,1fr))}.tbl .fu.ch{grid-column:1 / -1;grid-row:5}.tbl .fu.body{grid-column:1 / -1;grid-row:6}}
+@media(max-width:820px){.form,.head,.two,.dir{grid-template-columns:minmax(0,1fr)}.mx{grid-template-columns:24px minmax(0,1fr) minmax(0,1fr);font-size:13.5px}.mx>div{padding:10px 8px}}
 </style>
 </head>
 <body>
@@ -99,7 +125,7 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
 <section class="form pad">
   <div class="col">
     <span class="lb">사례</span>
-    <textarea id="caseIn" placeholder="사례 이름, 기사, 메모"></textarea>
+    <textarea id="caseIn" placeholder="사례 이름, 기존과 달라진 점, 기술·수치, 사용자 경험 변화"></textarea>
     <div class="row"><button class="go" id="copyPrompt" type="button">프롬프트 복사</button><button class="ln" id="pick" type="button">이미지 첨부</button><span class="thumb" id="thumb" hidden><img id="thumbImg" alt=""><button class="ln" id="unpick" type="button">빼기</button></span></div>
     <span class="hint">복사한 프롬프트를 <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>나 <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>에 붙여 넣어요.</span>
   </div>
@@ -113,15 +139,16 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
 
 <main class="pad">
   <div class="tools">
-    <button class="ln" id="copyMd" type="button">마크다운 복사</button>
-    <button class="ln" id="saveMd" type="button" hidden>.md 저장</button>
-    <button class="ln" id="png" type="button" hidden>PNG 저장</button>
+    <nav class="toc" aria-label="단계">
+      <a href="#s-case">사례·Fact</a><a href="#s-ftt">FTT</a><a href="#s-amp">T 해부·AR</a><a href="#s-seed">강화·확장</a><a href="#s-dir">방향 제안</a>
+    </nav>
+    <div class="r"><button class="ln" id="copyMd" type="button">마크다운 복사</button><button class="ln" id="saveMd" type="button">.md 저장</button><button class="ln" id="pngAll" type="button">PNG 전체 저장</button></div>
   </div>
   <div id="out"></div>
 </main>
 
 <dialog id="dlg">
-  <div class="dh"><span class="x">기록</span><button class="ln" id="dlgClose" type="button">닫기</button></div>
+  <div class="dh">기록<button class="ln" id="dlgClose" type="button">닫기</button></div>
   <ul class="hist" id="histList"></ul>
 </dialog>
 
@@ -129,104 +156,224 @@ dialog::backdrop{background:rgb(0 0 0/.4)}
 <script>
 {
 const EXAMPLE={
- case:{title:"Cerence × Microsoft Mobile Work Agent",source:"Cerence AI · Microsoft 365 Copilot",
-  headline:"이동 중 업무 흐름을 이어주는\n차량 Work AI Agent의\n선제형 맥락 오케스트레이션",
-  description:"Cerence AI와 Microsoft의 Mobile Work AI Agent는 차량 안에서 Outlook 캘린더, Teams, OneNote 같은 업무 도구와 주행 맥락을 연결한다. 사용자가 말하기 전에 다음 회의 장소로의 이동이나 업무 전환을 먼저 제안하고, 음성만으로 회의 참여와 메일 작성이 이어진다."},
- keywords:{from:"도메인 분절",trend:"도메인 통합",future:"도메인 확장"},
- hev:{from:{h:"캘린더·내비게이션·업무 앱이 **각각 독립된 시스템**으로 작동하여",e:"일정이 바뀌면 탑승자가 스마트폰으로 직접 확인한 뒤 **내비게이션을 다시 검색·입력**하여",v:"탑승자는 이동 시간을 업무와 **단절된 공백**으로 인식한다"},
-  trend:{h:"차량 AI가 캘린더·업무 도구·내비게이션·주행 상태를 **하나의 업무 맥락 레이어**로 통합 해석하여",e:"일정 기반 내비를 먼저 시작하고 회의 참여·메일 작성을 음성만으로 **연속 처리**하여",v:"탑승자는 이동 시간을 **업무 연속성이 유지되는 생산적 공간**으로 인식한다"}},
- future:{reinforce:{keyword:"업무 공간 그 자체",text:"업무 도구 연결을 넘어 탑승자의 **집중도·피로도·감정 상태**까지 읽어 최적의 업무 환경을 선제적으로 세팅하고, 차량 자체가 하나의 완전한 업무 공간이 된다."},
-  expand:{keyword:"생활의 연속성",text:"업무 도메인에 한정되던 연결이 운동·식사·공부·휴식 같은 **다양한 생활 도메인**으로 넓어져, 차 안에서 생활의 흐름이 끊기지 않는다."}}
+ case:{title:"Mercedes-Benz SKY CONTROL 파노라믹 루프",source:"Mercedes-Benz GLC 2026 · Research Frontiers SPD-SmartGlass",
+  headline:"좌석마다 다른 빛을 허락하는\n9구역 스마트 글라스 루프의\n개인 조도 제어",
+  description:"Research Frontiers의 SPD-SmartGlass 기술로 루프 유리를 9개 구역으로 나누고, 각 구역의 투명도를 4단계로 조절한다. 기존 파노라믹 루프는 덮개 전체를 열거나 닫는 방식이었지만, 이 사례는 좌석별로 빛 투과를 다르게 제어한다."},
+ facts:[{text:"파노라믹 루프를 9개 독립 구역으로 세분화하여 개별 제어",core:"제어 단위 분할"},
+  {text:"물리 덮개 없이 전기 신호만으로 유리 투명도를 즉각 제어",core:"전기적 투과 제어"},
+  {text:"탑승자 각각이 자기 머리 위의 빛을 4단계로 개별 조절",core:"좌석별 조도 정밀도"}],
+ ftts:[{id:"FTT-1",core:"조도 제어 해상도",
+  from:{h:"(1)물리적 덮개를 (2)전체 단일 구역에 (3)2단계(열림·닫힘)로 조절하여",e:"(1)한 사람의 덮개 조작이 (2)탑승자 전체의 빛 환경을 (3)투과·차단 두 상태 중 하나로 한꺼번에 결정하여",v:"(1)모든 탑승자가 (2)같은 조도 환경을 (3)타협하며 공유해야 한다"},
+  trend:{h:"(1)전기 신호 기반 스마트 글라스를 (2)9개 독립 구역으로 나누고 (3)4단계 투명도로 제어하여",e:"(1)유리 표면이 직접 빛을 걸러 (2)구역마다 (3)투과율을 따로 설정하여",v:"(1)각 탑승자가 (2)자기 자리의 (3)최적 조도 환경을 스스로 만든다"},
+  map:[{n:"(1)",f:"물리적 덮개",t:"전기 신호 기반 스마트 글라스",c:"제어 수단이 기계적 차단에서 전기적 투과도 제어로 바뀜"},
+   {n:"(2)",f:"전체 단일 구역",t:"9개 독립 구역",c:"제어 단위가 일괄에서 분할로 바뀜"},
+   {n:"(3)",f:"2단계(열림·닫힘)",t:"4단계 투명도",c:"제어 정밀도가 이진에서 다단계로 바뀜"}]}],
+ amp:{target:"FTT-1",axis:"빛 환경 제어가 전체 일괄 조절에서 좌석 대응형 독립 구역 조절로 바뀌었다.",
+  mechanism:"전기 신호로 투명도를 바꾸는 SPD-SmartGlass와 구역 분할 제어 구조가 결합되면서, 물리 덮개 없이도 루프 표면 자체를 여러 제어 단위로 나눌 수 있게 되었다.",
+  limit:"구역은 좌석 단위에 머물러 있고 조절 단계도 4단계이며, 사용자의 활동 맥락을 자동으로 읽어 조절하지는 못한다.",
+  ar:[{q:"왜 루프를 9개 구역으로 나눴는가?",a:"탑승자 위치와 좌석별 빛 조건이 다르기 때문이다."},
+   {q:"왜 좌석별 빛 조건을 다르게 봐야 하는가?",a:"같은 차 안에서도 탑승자마다 수면, 독서, 감상 등 활동 맥락이 다르기 때문이다."},
+   {q:"왜 활동 맥락이 조도 제어에 중요해지는가?",a:"공유 환경 안에서 한 사람의 최적 조건이 다른 사람에게는 방해 조건이 될 수 있기 때문이다."}],
+  principle:"공유 환경에서 개인 활동 맥락이 다를 때, 환경의 제어 해상도를 높여 개인별 최적 조건을 분리 제공한다.",
+  model:"공유 자원·환경에서 사용자별 맥락 차이가 충돌할 때, 제어 단위와 정밀도를 높여 충돌을 분리된 최적 조건으로 전환한다."},
+ reinforce:[{name:"신체 부위별 제어",desc:"좌석 단위 구역을 머리·눈·손 같은 신체 부위 단위로 더 잘게 나눈다."},
+  {name:"0~100% 연속 투명도",desc:"4단계를 연속값으로 바꿔 빛의 양을 미세하게 맞춘다."},
+  {name:"활동 감지 기반 자동 조절",desc:"사용자가 직접 고르던 조절을 활동 감지로 시스템이 먼저 설정한다."},
+  {name:"자세 따라 재편되는 동적 구역",desc:"고정 9구역 대신 탑승자 자세와 위치에 맞춰 구역 경계가 움직인다."}],
+ expand:[{name:"헤드레스트 개인 음장 분리",domain:"소리",desc:"빛을 나누던 원리를 헤드레스트 스피커로 소리 환경에 옮긴다."},
+  {name:"시트 표면 체온·압력 구역 제어",domain:"시트·촉감",desc:"루프 구역 제어를 시트 표면의 온도·압력 구역으로 옮긴다."},
+  {name:"보행자용 구역별 의도 표현",domain:"차량 외부",desc:"실내 환경 분리를 차량 외부로 옮겨 방향마다 다른 대상에게 다른 신호를 준다."},
+  {name:"TOLED 정보 밀도 조절",domain:"디지털 인터페이스",desc:"물리 차단을 정보 차단으로 옮겨 좌석별 화면 정보량을 조절한다."}],
+ directions:[
+  {seed:"활동 감지 기반 자동 조절",type:"강화",question:"AI가 활동을 틀리게 읽었을 때, 사용자는 어떻게 주도권을 되찾는가?",
+   hev:{h:"DMS와 Vital Sensing이 탑승자의 눈 감김·자세·심박 변화를 감지해 루프·조명·음향 구역 출력을 자동으로 바꾸고, 손바닥을 루프 쪽으로 드는 동작을 수동 복귀 신호로 받아들여",e:"자동 설정이 기본값으로 작동하다가 사용자 동작이 들어오면 해당 구역만 즉시 수동 제어로 넘어가도록 하여",v:"탑승자는 차가 먼저 알아서 맞추되 언제든 내 손으로 되돌릴 수 있는 실내를 믿고 맡긴다"},
+   angle:"조도 자체를 나누는 대신, 빛이 필요한 활동만 국소적으로 보강하는 방식으로 바꾼다.",
+   aidv:{d2:"DMS, Vital Sensing, AI 캐빈 플랫폼, Ambient Light",d3:"졸음 감지, 수면 환경, 불편 자동 감지",d1:"제로클릭, 건강지능HQ"}},
+  {seed:"헤드레스트 개인 음장 분리",type:"확장",question:"잠든 사람의 조용함과 깨어 있는 사람의 몰입은 어떻게 같은 실내에 공존하는가?",
+   hev:{h:"좌석별 헤드레스트 스피커와 AI Sound가 탑승자마다 다른 음원과 음량을 출력하고 옆 좌석 방향으로는 상쇄 음파를 내보내",e:"하나의 캐빈 스피커가 전체에 같은 소리를 퍼뜨리던 구조 대신 좌석 단위의 독립 음장을 형성하여",v:"탑승자는 함께 타고 있어도 서로의 시간을 방해하지 않는 각자의 방을 갖는다"},
+   angle:"소리를 나누는 대신, 대화가 필요한 두 좌석만 연결하는 선택적 음장 결합으로 튼다.",
+   aidv:{d2:"헤드레스트 스피커, AI Sound, AI 캐빈 플랫폼",d3:"탑승자 간 충돌 조율, 수면 환경",d1:"1.5가구, 필코노미"}},
+  {seed:"탑승자 간 관계 조율",type:"확장",question:"부부 싸움 중일 때 차량은 누구의 쾌적함을 우선해야 하는가?",
+   hev:{h:"차량이 대화 톤·발화 간격·시선 회피를 감지하고 좌석별 조도·공조·음량 구역을 서로 다른 값으로 분리하여",e:"한 사람의 설정이 공간 전체를 지배하던 구조 대신 갈등 상황에서 두 사람의 환경을 일시적으로 떼어 놓도록 하여",v:"탑승자는 같은 공간에 있으면서도 감정을 가라앉힐 거리를 확보한다"},
+   angle:"환경을 떼어 놓는 대신, 두 사람이 함께 볼 수 있는 중립적 화면 콘텐츠로 주의를 옮긴다.",
+   aidv:{d2:"DMS, AI 캐빈 플랫폼, Ambient Light, 헤드레스트 스피커",d3:"탑승자 간 충돌 조율",d1:"페이스테크, 필코노미"}}]
 };
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmt=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\((\d)\)/g,'<span class="n">$1</span>');
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let data=structuredClone(EXAMPLE),sample=null,downloads=null,busy=false,curId=null,imgBlob=null;
-
+let data=structuredClone(EXAMPLE),curId=null,imgBlob=null,imgUrl=null;
 const get=(o,p)=>p.split(".").reduce((a,k)=>a?.[k],o);
 const put=(o,p,v)=>{const ks=p.split(".");const last=ks.pop();ks.reduce((a,k)=>a[k],o)[last]=v};
-const ed=(p,tag="div",cls="")=>`<${tag} class="${cls}" contenteditable="true" spellcheck="false" data-p="${p}">${md(get(data,p))}</${tag}>`;
+const ed=(p,tag="div",cls="")=>`<${tag} class="${cls}" contenteditable="true" spellcheck="false" data-p="${p}">${fmt(get(data,p))}</${tag}>`;
+const L=a=>Array.isArray(a)?a:[];
+const sh=(id,t,sub="")=>`<div class="sh"><h2>${t}${sub?`<small>${esc(sub)}</small>`:""}</h2><button class="ln" data-png="${id}" type="button">PNG</button></div>`;
 
 function render(){
-  const date=new Date().toLocaleDateString("ko-KR");
-  $("#out").innerHTML=`<article class="sheet" id="sheet">
+  const d=data;
+  const ftts=L(d.ftts).map((f,i)=>`<section class="sheet" id="s-ftt${i?"-"+i:""}">${sh("s-ftt"+(i?"-"+i:""),esc(f.id||"FTT-"+(i+1)),f.core)}
+    <div class="mx">
+      <div class="ch"></div><div class="ch"><span class="x" style="color:var(--mute)">From</span></div><div class="ch tr"><span class="x">Trend</span></div>
+      ${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed(`ftts.${i}.from.${k}`,"div","fr")}<div class="tr">${ed(`ftts.${i}.trend.${k}`)}</div>`).join("")}
+    </div>
+    <table class="map"><thead><tr><th>번호</th><th>From</th><th>Trend</th><th>변화</th></tr></thead><tbody>
+      ${L(f.map).map((m,j)=>`<tr><td>${fmt(m.n)}</td><td>${ed(`ftts.${i}.map.${j}.f`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.t`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.c`,"span")}</td></tr>`).join("")}
+    </tbody></table></section>`).join("");
+  const a=d.amp||{};
+  $("#out").innerHTML=`
+  <section class="sheet" id="s-case">${sh("s-case","사례와 Fact")}
     <div class="head">
-      <div>${ed("case.headline","h2","ttl")}<div class="src">${ed("case.source","span")}</div></div>
-      <div style="display:grid;gap:14px">${data.img?`<figure class="fig"><img src="${data.img}" alt="사례 이미지"></figure>`:""}${ed("case.description","p","desc")}</div>
+      <div>${ed("case.headline","h2","ttl")}<div class="src">${ed("case.title","span")} · ${ed("case.source","span")}</div></div>
+      <div>${d.img?`<figure class="fig"><img src="${d.img}" alt="사례 이미지"></figure>`:""}${ed("case.description","p","desc")}</div>
     </div>
-    <div class="tbl">
-      <div class="ch"></div>
-      <div class="ch"><span class="x" style="color:var(--mute)">From</span>${ed("keywords.from","span","kw")}</div>
-      <div class="ch"><span class="x">Trend</span>${ed("keywords.trend","span","kw")}</div>
-      <div class="ch fu"><span class="x">to Future</span>${ed("keywords.future","span","kw")}</div>
-      ${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed("hev.from."+k,"div","t fr")}${ed("hev.trend."+k,"div","t")}`).join("")}
-      <div class="fu body">
-        <div><h4><span class="x">강화</span>${ed("future.reinforce.keyword","span")}</h4>${ed("future.reinforce.text","p")}</div>
-        <div><h4><span class="x">확장</span>${ed("future.expand.keyword","span")}</h4>${ed("future.expand.text","p")}</div>
-      </div>
+    <ul class="facts">${L(d.facts).map((f,i)=>`<li><span class="x">Fact ${i+1}</span>${ed(`facts.${i}.core`,"b")}${ed(`facts.${i}.text`,"p")}</li>`).join("")}</ul>
+  </section>
+  ${ftts}
+  <section class="sheet" id="s-amp">${sh("s-amp","T 해부와 AR",a.target||"")}
+    <div class="two">
+      <div class="kv"><div><span>변화축</span>${ed("amp.axis","p")}</div><div><span>메커니즘</span>${ed("amp.mechanism","p")}</div><div><span>한계</span>${ed("amp.limit","p")}</div></div>
+      <ol class="ar">${L(a.ar).map((s,i)=>`<li><span class="q">Q${i+1}</span>${ed(`amp.ar.${i}.q`,"b")}${ed(`amp.ar.${i}.a`,"p")}</li>`).join("")}</ol>
     </div>
-    <div class="foot"><span>${esc(data.case.title)}</span><span>${date}</span></div>
-  </article>`;
+    <div class="root"><span>근원 원리</span>${ed("amp.principle","p","big")}<span style="margin-top:6px">보편화 모델</span>${ed("amp.model","p","sm")}</div>
+  </section>
+  <section class="sheet" id="s-seed">${sh("s-seed","강화·확장 시드")}
+    <div class="two seeds">
+      <div><h3>강화 <small>같은 축을 더 밀면</small></h3><ul class="sl">${L(d.reinforce).map((s,i)=>`<li>${ed(`reinforce.${i}.name`,"b")}${ed(`reinforce.${i}.desc`,"p")}</li>`).join("")}</ul></div>
+      <div><h3>확장 <small>이 원리를 다른 데 쓰면</small></h3><ul class="sl">${L(d.expand).map((s,i)=>`<li><div><span class="tag">${esc(s.domain)}</span>${ed(`expand.${i}.name`,"b")}</div>${ed(`expand.${i}.desc`,"p")}</li>`).join("")}</ul></div>
+    </div>
+  </section>
+  <section class="sheet" id="s-dir">${sh("s-dir","방향 제안")}
+    <div class="dirs">${L(d.directions).map((r,i)=>`<article class="dir">
+      <div class="qh"><span class="meta"><span class="tag">${esc(r.type)}</span>${esc(r.seed)}</span>${ed(`directions.${i}.question`,"h3")}</div>
+      <div><div class="hev3">${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed(`directions.${i}.hev.${k}`)}`).join("")}</div>
+        <p class="angle"><span>다른 각도</span>${ed(`directions.${i}.angle`,"span")}</p></div>
+      <div class="aidv">${["d1","d2","d3"].map(k=>`<div><b>${k.toUpperCase()}</b>${ed(`directions.${i}.aidv.${k}`,"span")}</div>`).join("")}</div>
+    </article>`).join("")}</div>
+  </section>`;
 }
 
 function htmlToMd(h){
   const t=document.createElement("textarea");
-  t.innerHTML=h.replace(/<\/?(b|strong)>/gi,"**").replace(/<br\s*\/?>/gi,"\n").replace(/<\/(div|p)>/gi,"\n").replace(/<[^>]+>/g,"");
+  t.innerHTML=h.replace(/<span class="n">(\d)<\/span>/g,"($1)").replace(/<\/?(b|strong)>/gi,"**").replace(/<br\s*\/?>/gi,"\n").replace(/<\/(div|p)>/gi,"\n").replace(/<[^>]+>/g,"");
   return t.value.replace(/\*\*\*\*/g,"").replace(/\n+$/,"");
 }
 $("#out").addEventListener("focusout",e=>{const el=e.target.closest("[data-p]");if(!el)return;
   const v=htmlToMd(el.innerHTML);if(v!==get(data,el.dataset.p)){put(data,el.dataset.p,v);saveHist()}});
 
-const toMarkdown=d=>`# ${d.case.headline.replace(/\n/g," ")}
+function toMarkdown(d){
+  const a=d.amp||{};
+  return `# ${(d.case.headline||"").replace(/\n/g," ")}
 
 ${d.case.title}${d.case.source?` · ${d.case.source}`:""}
 
 ${d.case.description}
 
-| | From · ${d.keywords.from} | Trend · ${d.keywords.trend} |
+## Fact
+${L(d.facts).map((f,i)=>`${i+1}. **${f.core}** ${f.text}`).join("\n")}
+
+${L(d.ftts).map(f=>`## ${f.id} · ${f.core}
+
+| | From | Trend |
 |---|---|---|
-${["h","e","v"].map(k=>`| **${k.toUpperCase()}** | ${d.hev.from[k]} | ${d.hev.trend[k]} |`).join("\n")}
+${["h","e","v"].map(k=>`| **${k.toUpperCase()}** | ${f.from[k]} | ${f.trend[k]} |`).join("\n")}
 
-**to Future · ${d.keywords.future}**
-- 강화 · ${d.future.reinforce.keyword}: ${d.future.reinforce.text}
-- 확장 · ${d.future.expand.keyword}: ${d.future.expand.text}
-`;
+| 번호 | From | Trend | 변화 |
+|---|---|---|---|
+${L(f.map).map(m=>`| ${m.n} | ${m.f} | ${m.t} | ${m.c} |`).join("\n")}
+`).join("\n")}
+## T 해부 (${a.target||""})
+- 변화축: ${a.axis}
+- 메커니즘: ${a.mechanism}
+- 한계: ${a.limit}
 
-const PROMPT=(caseText,focus,mode,hasImg)=>`너는 LG AIDV(AI-Defined Vehicle) 산학 프로젝트의 사례 분석가다. 아래 사례를 From–Trend–Future 형식으로 분석해 JSON 하나만 출력한다.
+## AR
+${L(a.ar).map((s,i)=>`Q${i+1}. ${s.q}\nA${i+1}. ${s.a}`).join("\n\n")}
+
+**근원 원리** ${a.principle}
+
+**보편화 모델** ${a.model}
+
+## 강화 시드
+${L(d.reinforce).map(s=>`- **${s.name}** ${s.desc}`).join("\n")}
+
+## 확장 시드
+${L(d.expand).map(s=>`- **${s.name}** (${s.domain}) ${s.desc}`).join("\n")}
+
+## 방향 제안
+${L(d.directions).map(r=>`### ${r.question}
+${r.type} · ${r.seed}
+
+| | 시나리오 |
+|---|---|
+| **H** | ${r.hev.h} |
+| **E** | ${r.hev.e} |
+| **V** | ${r.hev.v} |
+
+- 다른 각도: ${r.angle}
+- AIDV: D1 ${r.aidv.d1} / D2 ${r.aidv.d2} / D3 ${r.aidv.d3}
+`).join("\n")}`;
+}
+
+const PROMPT=(caseText,hasImg)=>`너는 LG AIDV(AI-Defined Vehicle) 산학 프로젝트의 FTT(From-Trend-To) 분석가다. 아래 사례를 FTT 작성 가이드와 HEV 작성 가이드에 따라 끝까지 분석하고, 마지막에 JSON 하나만 출력한다.
 
 [사례]
 ${caseText}
-${focus?`\n[분석 초점]\n${focus}\n`:""}${hasImg?"\n첨부 이미지도 사례 자료로 함께 읽는다.\n":""}
-[규칙]
-- Trend = 입력된 사례 자체. ${mode==="sota"?"From = Trend 직전의 가장 앞선 양산·상용 수준(SOTA). 원시적인 수동 조작 같은 먼 과거로 내려가지 않는다.":"From = 같은 일을 사람이 직접 하던 방식."}
-- Future = Trend가 추구하는 본질을 밀어붙인 방향. 강화는 같은 도메인 안에서 Trend의 변화를 극한까지 밀었을 때, 확장은 같은 본질을 다른 도메인·맥락·대상으로 옮겼을 때. 솔루션이 아니라 기회의 방향으로 쓴다.
-- 키워드(from/trend/future)는 2~6자 명사구 세 개가 하나의 축 위에서 단계적으로 변해야 한다. 예: 도메인 분절 → 도메인 통합 → 도메인 확장 / 명령 후 실행형 → 선제 제안형 → 즉시 실행형 / 직접 수행 → 자동 수행 → 예방적 개입.
-- H(How, 무엇이 어떻게 작동하나)는 반드시 "~하여"로, E(Effect, 그래서 무엇이 일어나나)도 반드시 "~하여"로, V(Value, 사용자가 무엇으로 인식·체감하나)는 반드시 "~한다"로 끝난다. H·E·V를 이어 읽으면 "~하여 ~하여 ~한다"의 한 문장이 되어야 한다. "~하며", "~해", "~되어"로 끝내지 않는다. From과 Trend의 같은 행은 같은 대상을 두고 대구가 되게. 바뀐 핵심어 1~2개만 **굵게**.
-- 번호 매기기, 잘게 쪼개기 금지. 큰 개념으로 한 문장씩.
-- headline: 2~3줄(줄바꿈 \\n), 명사로 끝나는 무게 있는 제목. 예: "주행 중 실시간 데이터 환류로\\n플릿 전체의 판단력을 자기강화하는\\n차량 AI 학습 오케스트레이션"
-- description: 사례 설명 3~4문장, 사실만. 모르는 수치·연도는 지어내지 않는다.
-- 엠대시(—) 금지. 보고서체. 과장된 마케팅 어휘 금지.
+${hasImg?"\n(사례 이미지를 이 대화에 함께 첨부했다. 이미지도 사례 자료로 읽는다.)\n":""}
+[목적]
+FTT는 사례 요약이 아니다. 사례 고유의 구조적 전환 원리를 뽑고, 그 원리를 AIDV 차량 경험으로 증폭할 시드까지 만드는 것이다. T는 솔루션이 아니라 시드다. "개인화가 중요하다", "편리해진다"처럼 어느 사례에나 붙는 결론은 실패다.
 
-[출력 JSON]
-{"case":{"title":"짧은 사례명","source":"브랜드·기관(모르면 빈 문자열)","headline":"","description":""},
-"keywords":{"from":"","trend":"","future":""},
-"hev":{"from":{"h":"","e":"","v":""},"trend":{"h":"","e":"","v":""}},
-"future":{"reinforce":{"keyword":"","text":"2~3문장"},"expand":{"keyword":"","text":"2~3문장"}}}`;
+[진행 순서]
+1. Fact 추출: 사례에서 기존과 구조적으로 다른 변화만 뽑는다. 서로 독립적인 변화축만 남긴다(단순한 사례 1~2개, 복잡한 사례 3~5개). 각 Fact는 기존 대비 무엇이 구조적으로 달라졌는지, 다른 Fact를 빼도 성립하는지 통과해야 한다.
+2. FTT 생성: 독립적인 변화축 하나당 FTT 하나(보통 1~2개). From = Trend 직전의 가장 앞선 양산 수준(SOTA)의 작동 구조와 한계. "나빴다/불편했다" 같은 평가어 금지. Trend = 사례가 바꾼 것. 기술명·수치·물리 구조·제어 단위·작동 방식·사용자 역할 변화를 넣는다.
+3. H-E-V
+ - H(How): 관찰 가능한 팩트만. 구조·속성·위치·단위·센서·출력·입력·사용자 행위. "편하게/자연스럽게/AI가 알아서" 금지. 반드시 "~하여"로 끝난다.
+ - E(Effect): H 때문에 생기는 객관적 작동 변화만(정보 흐름, 물리 전달, 제어 단위, 인지 구조, 조작 단계). "편해진다/안심한다/별도 조작 없이" 같은 사용자 효용은 E에 쓰지 않는다. 반드시 "~하여"로 끝난다.
+ - V(Value): E의 결과로 사용자가 얻는 가치와 인식 변화. 차량을 어떻게 새롭게 인식하게 되는지까지. 반드시 "~한다"로 끝난다.
+ - H에 없는 것이 E에, E에 없는 것이 V에 튀어나오면 안 된다.
+4. 번호 매핑(가장 중요): H 안의 핵심 요소를 (1)(2)(3)으로 쪼갠다. From의 (n)과 Trend의 (n)은 반드시 같은 축을 가리키며 1:1로 대응한다. 한쪽에만 있는 번호 금지. H의 번호 축은 E와 V에서도 같은 번호로 이어진다. 번호마다 매핑 노트(From 요소 → Trend 요소, 무엇이 무엇으로 바뀌었나 한 줄)를 쓴다.
+5. T 해부(가장 강한 FTT 하나를 깊게): 변화축(무엇이 무엇으로 바뀌었나 한 문장), 메커니즘(왜 가능해졌나, 기술·구조 원인), 한계(아직 못 간 지점, 강화의 출발점).
+6. AR: Why를 3~4회 반복해 근원 원리에 닿는다. 도메인 수준의 구체성을 유지하고 철학으로 올라가지 않는다.
+7. 근원 원리 한 줄, 보편화 모델 한 줄: "[상황/조건]에서 [충돌/한계]가 발생할 때, [구조적 조정 방식]을 통해 [새로운 가치/상태]로 전환한다." 너무 넓지 않게 구조를 남긴다.
+8. 강화 시드 4~6개: 같은 변화축을 극단으로 민다(더 잘게, 연속값, 수동→자동, 보편→개인 학습, 고정→가변, 일부→전체). 감각·대상·도메인이 바뀌면 강화가 아니다.
+9. 확장 시드 4~6개: 근원 원리를 다른 감각(소리·온도·향·촉감), 다른 대상(시트·도어·대시보드·스티어링), 관계(탑승자 간 조율), 다른 시간(탑승 전·정차 중·하차 후), 차량 외부(보행자·도로·인프라), 디지털 인터페이스로 옮긴다. 원리의 구조는 유지한다. domain에 옮긴 곳을 짧게 쓴다.
+10. 방향 제안 3개(강화에서 1개 이상, 확장에서 1개 이상): 제목은 "맥락 적용", "감각 전환" 같은 카테고리가 아니라 그 시드만의 도발적 질문. 각 방향마다 차량 안에서 실제로 벌어지는 시나리오 HEV(같은 어미 규칙), 축을 살짝 튼 다른 각도, AIDV 적용(D1 트렌드 / D2 기술 / D3 니즈를 구체 이름으로).
+ - D2 기술 예: DMS, Vital Sensing, AI Sound, 헤드레스트 스피커, AI 캐빈 플랫폼, ThinQ, TOLED 파노라마, Shy Tech, AR HUD, Ambient Light, AVS 비전 솔루션
+ - D1 트렌드 예: 1.5가구, 제로클릭, 필코노미, 건강지능HQ, 픽셀라이프, 페이스테크
+ - D3 니즈 예: 졸음 감지, 탑승자 간 충돌 조율, 수면 환경, 불편 자동 감지
+ - AI가 감지·판단·예측·조율하는 대상을 명확히 쓰고, 왜 차량이어야 하는지(좌석·캐빈·주행·도착·동승자·감각 환경)가 드러나야 한다.
 
-const valid=o=>o?.case&&o.keywords&&o.hev?.from&&o.hev?.trend&&o.future?.reinforce&&o.future?.expand;
+[좋은 예시: Mercedes-Benz SKY CONTROL]
+From H: (1)물리적 덮개를 (2)전체 단일 구역에 (3)2단계(열림·닫힘)로 조절하여
+Trend H: (1)전기 신호 기반 스마트 글라스를 (2)9개 독립 구역으로 나누고 (3)4단계 투명도로 제어하여
+매핑: (1) 제어 수단 기계적 차단→전기적 투과도 / (2) 제어 단위 일괄→분할 / (3) 제어 정밀도 이진→다단계
+근원 원리: 공유 환경에서 개인 활동 맥락이 다를 때, 환경의 제어 해상도를 높여 개인별 최적 조건을 분리 제공한다.
+
+[문장 규칙]
+보고서체. 엠대시(—) 금지. 굵게(**)는 꼭 필요한 핵심어에만. 모르는 수치·연도는 지어내지 않는다. headline은 2~3줄(\\n), 명사로 끝나는 무게 있는 제목.
+
+[출력]
+설명 없이 아래 JSON 하나만, 코드 블록 하나로 출력한다.
+{"case":{"title":"짧은 사례명","source":"브랜드·기술(모르면 빈 문자열)","headline":"","description":"3~4문장, 사실만"},
+"facts":[{"core":"변화 핵심 2~4단어","text":"한 문장"}],
+"ftts":[{"id":"FTT-1","core":"변화 핵심 2~4단어","from":{"h":"(1)… (2)… (3)…하여","e":"(1)… (2)…하여","v":"(1)… (2)…한다"},"trend":{"h":"","e":"","v":""},"map":[{"n":"(1)","f":"From 요소","t":"Trend 요소","c":"무엇이 무엇으로 바뀌었나"}]}],
+"amp":{"target":"FTT-1","axis":"","mechanism":"","limit":"","ar":[{"q":"왜 …?","a":"…때문이다."}],"principle":"","model":""},
+"reinforce":[{"name":"","desc":"한 문장"}],
+"expand":[{"name":"","domain":"","desc":"한 문장"}],
+"directions":[{"seed":"시드 이름","type":"강화 또는 확장","question":"","hev":{"h":"","e":"","v":""},"angle":"","aidv":{"d1":"","d2":"","d3":""}}]}`;
+
+const valid=o=>o?.case&&L(o.ftts).length&&o.ftts.every(f=>f.from&&f.trend);
 function setStatus(t,err){const s=$("#status");s.textContent=t;s.classList.toggle("err",!!err)}
-
 function parseResult(raw){
   const a=raw.indexOf("{"),b=raw.lastIndexOf("}");if(a<0||b<a)throw{message:"JSON이 안 보여요. 답 전체를 복사해 붙여 주세요."};
-  let o;try{o=JSON.parse(raw.slice(a,b+1))}catch(e){throw{message:"답을 읽지 못했어요. 답 전체를 그대로 붙여 주세요."}}
-  if(!valid(o))throw{message:"빠진 칸이 있어요. AI에게 '형식 그대로 JSON만 다시' 라고 해 주세요."};return o;
+  let o;try{o=JSON.parse(raw.slice(a,b+1))}catch(e){throw{message:"답을 읽지 못했어요. 답이 중간에 끊겼다면 AI에게 '이어서'라고 한 뒤 전체를 붙여 주세요."}}
+  if(!valid(o))throw{message:"FTT가 빠져 있어요. AI에게 '형식 그대로 JSON만 다시'라고 해 주세요."};
+  o.facts=L(o.facts);o.reinforce=L(o.reinforce);o.expand=L(o.expand);o.directions=L(o.directions);o.amp=o.amp||{};o.amp.ar=L(o.amp.ar);
+  o.ftts.forEach(f=>{f.map=L(f.map)});o.directions.forEach(r=>{r.hev=r.hev||{};r.aidv=r.aidv||{}});return o;
 }
 $("#copyPrompt").onclick=async()=>{
   const text=$("#caseIn").value.trim();if(!text){setStatus("사례를 먼저 넣어 주세요.",true);return}
-  let p=PROMPT(text,"","sota",!!imgBlob);if(imgBlob)p+="\n\n(사례 이미지를 이 대화에 함께 첨부했다.)";
-  const b=$("#copyPrompt");try{await navigator.clipboard.writeText(p);b.textContent="복사됨";setStatus(imgBlob?"AI 창에 붙여 넣고 이미지도 같이 올려 주세요.":"AI 창에 붙여 넣어 주세요.")}catch(e){b.textContent="복사 안 됨"}
+  const b=$("#copyPrompt");try{await navigator.clipboard.writeText(PROMPT(text,!!imgBlob));b.textContent="복사됨";setStatus(imgBlob?"AI 창에 붙여 넣고 이미지도 같이 올려 주세요.":"AI 창에 붙여 넣어 주세요.")}catch(e){b.textContent="복사 안 됨"}
   setTimeout(()=>b.textContent="프롬프트 복사",1600);
 };
 function generate(){
@@ -234,55 +381,51 @@ function generate(){
     setStatus("완료. 글자를 눌러 고칠 수 있어요.");$("#out").scrollIntoView({behavior:"smooth"})}
   catch(e){setStatus(e.message||"실패했어요.",true)}
 }
-function saveHist(){if(!curId)return;let h=store.get("ftf-hist2",[]).filter(x=>x.id!==curId);h.unshift({id:curId,t:new Date().toISOString(),data});store.set("ftf-hist2",h.slice(0,30))}
+$("#go").onclick=generate;
+$("#resIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
+
+function saveHist(){if(!curId)return;let h=store.get("ftf-hist3",[]).filter(x=>x.id!==curId);h.unshift({id:curId,t:new Date().toISOString(),data});store.set("ftf-hist3",h.slice(0,30))}
 function openHist(){
-  const h=store.get("ftf-hist2",[]);
-  $("#histList").innerHTML=h.length?h.map(x=>`<li><button class="o" data-id="${x.id}" type="button">${esc(x.data.case.title)}<small>${new Date(x.t).toLocaleString("ko-KR")} · ${esc(x.data.keywords.from)} → ${esc(x.data.keywords.trend)} → ${esc(x.data.keywords.future)}</small></button><button class="d" data-del="${x.id}" type="button">삭제</button></li>`).join(""):'<li style="padding:20px;color:var(--mute)">아직 없어요.</li>';
+  const h=store.get("ftf-hist3",[]);
+  $("#histList").innerHTML=h.length?h.map(x=>`<li><button class="o" data-id="${x.id}" type="button">${esc(x.data.case.title)}<small>${new Date(x.t).toLocaleString("ko-KR")} · ${esc(x.data.amp?.principle||"")}</small></button><button class="d" data-del="${x.id}" type="button">삭제</button></li>`).join(""):'<li style="padding:20px;color:var(--mute)">아직 없어요.</li>';
   $("#dlg").showModal();
 }
 $("#histList").addEventListener("click",e=>{
-  const o=e.target.closest("[data-id]"),d=e.target.closest("[data-del]"),h=store.get("ftf-hist2",[]);
+  const o=e.target.closest("[data-id]"),d=e.target.closest("[data-del]"),h=store.get("ftf-hist3",[]);
   if(o){const x=h.find(x=>x.id==o.dataset.id);if(x){data=x.data;curId=x.id;render();$("#dlg").close()}}
-  if(d){store.set("ftf-hist2",h.filter(x=>x.id!=d.dataset.del));openHist()}
+  if(d){store.set("ftf-hist3",h.filter(x=>x.id!=d.dataset.del));openHist()}
 });
 $("#histBtn").onclick=openHist;$("#dlgClose").onclick=()=>$("#dlg").close();
 
 $("#caseIn").value=store.get("ftf-draft","");
 $("#caseIn").addEventListener("input",()=>store.set("ftf-draft",$("#caseIn").value));
-$("#go").onclick=generate;
-$("#resIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))generate()});
-let imgUrl=null;
 async function takeImg(f){if(!f||!f.type?.startsWith("image/"))return;
   try{const bmp=await createImageBitmap(f),k=Math.min(1,1200/Math.max(bmp.width,bmp.height)),c=document.createElement("canvas");
     c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
-    imgUrl=c.toDataURL("image/jpeg",.82);imgBlob=await new Promise(r=>c.toBlob(r,"image/jpeg",.82))}catch(e){setStatus("이미지를 읽지 못했어요.",true);return}
+    imgUrl=c.toDataURL("image/jpeg",.82);imgBlob=f}catch(e){setStatus("이미지를 읽지 못했어요.",true);return}
   $("#thumbImg").src=imgUrl;$("#thumb").hidden=false;$("#pick").hidden=true}
 $("#pick").onclick=()=>$("#file").click();
 $("#file").onchange=e=>{takeImg(e.target.files[0]);e.target.value=""};
 $("#unpick").onclick=()=>{imgBlob=null;imgUrl=null;$("#thumb").hidden=true;$("#pick").hidden=false};
-const main=document.querySelector(".form .col");
-main.addEventListener("dragover",e=>{e.preventDefault();main.classList.add("drag")});
-main.addEventListener("dragleave",()=>main.classList.remove("drag"));
-main.addEventListener("drop",e=>{e.preventDefault();main.classList.remove("drag");takeImg(e.dataTransfer.files[0])});
+const col=document.querySelector(".form .col");
+col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("drag")});
+col.addEventListener("dragleave",()=>col.classList.remove("drag"));
+col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("drag");takeImg(e.dataTransfer.files[0])});
 $("#caseIn").addEventListener("paste",e=>{const f=[...(e.clipboardData?.files||[])].find(x=>x.type.startsWith("image/"));if(f){e.preventDefault();takeImg(f)}});
 
+function save(filename,blob){const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+const slug=()=>(data.case.title||"ftt").replace(/[^\w가-힣]+/g,"_").slice(0,40);
 $("#copyMd").onclick=async()=>{const b=$("#copyMd");try{await navigator.clipboard.writeText(toMarkdown(data));b.textContent="복사됨"}catch(e){b.textContent="복사 안 됨"}setTimeout(()=>b.textContent="마크다운 복사",1500)};
-async function save(filename,blob){
-  if(downloads)return downloads.save({filename,data:blob});
-  const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
+$("#saveMd").onclick=()=>save(`FTT_${slug()}.md`,new Blob([toMarkdown(data)],{type:"text/markdown"}));
+async function png(id){
+  const el=document.getElementById(id);if(!el||!window.html2canvas)return;
+  const c=await html2canvas(el,{scale:2,backgroundColor:getComputedStyle(document.body).backgroundColor,ignoreElements:x=>x.dataset?.png!==undefined});
+  const b=await new Promise(r=>c.toBlob(r,"image/png"));save(`FTT_${slug()}_${id.replace("s-","")}.png`,b);
 }
-const slug=()=>(data.case.title||"ftf").replace(/[^\w가-힣]+/g,"_").slice(0,40);
-$("#saveMd").onclick=async()=>{try{await save(`FTF_${slug()}.md`,new Blob([toMarkdown(data)],{type:"text/markdown"}))}catch(e){}};
-$("#png").onclick=async()=>{
-  try{setStatus("이미지 만드는 중");const el=$("#sheet");
-    const c=await html2canvas(el,{scale:2,backgroundColor:getComputedStyle(document.body).backgroundColor});
-    const b=await new Promise(r=>c.toBlob(r,"image/png"));
-    await save(`FTF_${slug()}.png`,b);setStatus("저장됨")}catch(e){setStatus("저장이 취소됐어요.",true)}
-};
+$("#out").addEventListener("click",e=>{const b=e.target.closest("[data-png]");if(b)png(b.dataset.png).catch(()=>setStatus("이미지 저장에 실패했어요.",true))});
+$("#pngAll").onclick=async()=>{try{setStatus("이미지 만드는 중");for(const s of document.querySelectorAll("#out .sheet")){await png(s.id);await new Promise(r=>setTimeout(r,400))}setStatus("저장했어요.")}catch(e){setStatus("이미지 저장에 실패했어요.",true)}};
 
 render();
-(()=>{$("#saveMd").hidden=false;$("#png").hidden=false;
-})();
 }
 </script>
 </body>

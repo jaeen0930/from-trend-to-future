@@ -119,6 +119,30 @@ textarea::placeholder{color:var(--faint)}
 .aidv div{display:grid;grid-template-columns:30px minmax(0,1fr);padding:8px 0;border-top:1px solid var(--line)}
 .aidv div>b{font:600 11.5px/1.75 var(--mono);color:var(--muted)}
 .angle{margin:10px 0 0;font-size:13.5px;background:var(--soft);border-radius:8px;padding:10px 12px}.angle span{display:block;margin-bottom:2px}
+.basis{margin:0;font-size:13px;color:var(--muted)}.basis span{font:500 11px/1 var(--mono);letter-spacing:.06em;border:1px solid var(--line2);border-radius:999px;padding:3px 8px;margin-right:8px}
+.head .desc{margin-top:12px}
+.spec{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.spec div{background:var(--card2);border:1px solid var(--line);border-radius:var(--rs);padding:9px 12px}
+.spec dt{font:500 10.5px/1.4 var(--mono);letter-spacing:.06em;color:var(--muted)}.spec dd{margin:2px 0 0;font-size:13px;font-weight:500}
+.facts .x em{font-style:normal;margin-left:8px;color:var(--ink)}
+.facts .why{font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line2);padding-top:6px;margin-top:4px}
+.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:rgba(127,127,127,.35);margin-top:10px;border-radius:8px;overflow:hidden}
+.parts div{background:var(--ink);padding:10px 12px;display:grid;gap:3px;align-content:start}
+.parts p{margin:0;font-size:13px}
+.push{font:500 11.5px/1.5 var(--mono)!important;color:var(--ink)!important}
+.dirs{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))!important}
+.dir{grid-template-columns:minmax(0,1fr)!important;align-content:start}
+.ctx{margin:2px 0 0;font-size:12.5px;color:var(--muted)}.ctx::before{content:"상황 · ";font-family:var(--mono);font-size:11px}
+.dmeta{margin:0;display:grid;font-size:13px}
+.dmeta div{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;padding:7px 0;border-top:1px solid var(--line)}
+.dmeta dt{font:500 11px/1.8 var(--mono);color:var(--muted);letter-spacing:.02em}.dmeta dd{margin:0}
+.ck{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:6px}
+.ck li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 10px;background:var(--card2);border:1px solid var(--line);border-radius:var(--rs);padding:10px 12px}
+.ck .mk{grid-row:span 2;font:600 11px/1 var(--mono);display:grid;place-items:center;border-radius:6px;height:26px;background:var(--ink);color:var(--card)}
+.ck li.no .mk{background:none;color:var(--ink);border:1px dashed var(--ink)}
+.ck b{font-size:13.5px;font-weight:600}.ck p{margin:0;font-size:12.5px;color:var(--muted)}
+#out{gap:10px}.sheet{gap:14px}
+@media(max-width:900px){.parts,.spec{grid-template-columns:minmax(0,1fr)}.dmeta div{grid-template-columns:minmax(0,1fr);gap:0}}
 [contenteditable]{border-radius:4px}
 [contenteditable]:hover{background:var(--soft)}
 .root [contenteditable]:hover{background:rgba(127,127,127,.25)}
@@ -180,16 +204,17 @@ dialog::backdrop{background:rgb(0 0 0/.35)}
 const EXAMPLE={
  case:{title:"Mercedes-Benz SKY CONTROL 파노라믹 루프",source:"Mercedes-Benz GLC 2026 · Research Frontiers SPD-SmartGlass",
   headline:"좌석마다 다른 빛을 허락하는\n9구역 스마트 글라스 루프의\n개인 조도 제어",
-  description:"Research Frontiers의 SPD-SmartGlass 기술로 루프 유리를 9개 구역으로 나누고, 각 구역의 투명도를 4단계로 조절한다. 기존 파노라믹 루프는 덮개 전체를 열거나 닫는 방식이었지만, 이 사례는 좌석별로 빛 투과를 다르게 제어한다."},
- facts:[{text:"파노라믹 루프를 9개 독립 구역으로 세분화하여 개별 제어",core:"제어 단위 분할"},
-  {text:"물리 덮개 없이 전기 신호만으로 유리 투명도를 즉각 제어",core:"전기적 투과 제어"},
-  {text:"탑승자 각각이 자기 머리 위의 빛을 4단계로 개별 조절",core:"좌석별 조도 정밀도"}],
- ftts:[{id:"FTT-1",core:"조도 제어 해상도",
+  description:"Research Frontiers의 SPD-SmartGlass 기술로 루프 유리를 9개 구역으로 나누고, 각 구역의 투명도를 4단계로 조절한다. 기존 파노라믹 루프는 덮개 전체를 열거나 닫는 방식이었지만, 이 사례는 좌석별로 빛 투과를 다르게 제어한다.",
+  specs:[{k:"기술",v:"SPD-SmartGlass (전기 신호 기반 투과도 제어 유리)"},{k:"제어 단위",v:"루프 9개 구역"},{k:"제어 단계",v:"구역별 4단계 투명도"},{k:"사용자 역할",v:"좌석별로 자기 머리 위 구역을 직접 선택"}]},
+ facts:[{core:"제어 단위 분할",text:"파노라믹 루프를 9개 독립 구역으로 세분화하여 개별 제어",why:"하나의 덮개가 전체를 가리던 일괄 구조가 구역 단위 구조로 바뀌었다.",ftt:"FTT-1"},
+  {core:"전기적 투과 제어",text:"물리 덮개 없이 전기 신호만으로 유리 투명도를 즉각 제어",why:"빛을 막는 수단이 기계 부품에서 유리 표면 자체로 옮겨갔다.",ftt:"FTT-1"},
+  {core:"좌석별 조도 정밀도",text:"탑승자 각각이 자기 머리 위의 빛을 4단계로 개별 조절",why:"열림·닫힘 이진 선택이 다단계 선택으로 바뀌어 조절 정밀도가 생겼다.",ftt:"FTT-1"}],
+ ftts:[{id:"FTT-1",core:"조도 제어 해상도",basis:"전동 선셰이드가 달린 기존 파노라믹 루프",
   from:{h:"(1)물리적 덮개를 (2)전체 단일 구역에 (3)2단계(열림·닫힘)로 조절하여",e:"(1)한 사람의 덮개 조작이 (2)탑승자 전체의 빛 환경을 (3)투과·차단 두 상태 중 하나로 한꺼번에 결정하여",v:"(1)모든 탑승자가 (2)같은 조도 환경을 (3)타협하며 공유해야 한다"},
   trend:{h:"(1)전기 신호 기반 스마트 글라스를 (2)9개 독립 구역으로 나누고 (3)4단계 투명도로 제어하여",e:"(1)유리 표면이 직접 빛을 걸러 (2)구역마다 (3)투과율을 따로 설정하여",v:"(1)각 탑승자가 (2)자기 자리의 (3)최적 조도 환경을 스스로 만든다"},
-  map:[{n:"(1)",f:"물리적 덮개",t:"전기 신호 기반 스마트 글라스",c:"제어 수단이 기계적 차단에서 전기적 투과도 제어로 바뀜"},
-   {n:"(2)",f:"전체 단일 구역",t:"9개 독립 구역",c:"제어 단위가 일괄에서 분할로 바뀜"},
-   {n:"(3)",f:"2단계(열림·닫힘)",t:"4단계 투명도",c:"제어 정밀도가 이진에서 다단계로 바뀜"}]}],
+  map:[{n:"(1)",axis:"제어 수단",f:"물리적 덮개",t:"전기 신호 기반 스마트 글라스",c:"기계적 차단에서 전기적 투과도 제어로 바뀜"},
+   {n:"(2)",axis:"제어 단위",f:"전체 단일 구역",t:"9개 독립 구역",c:"일괄에서 분할로 바뀜"},
+   {n:"(3)",axis:"제어 정밀도",f:"2단계(열림·닫힘)",t:"4단계 투명도",c:"이진에서 다단계로 바뀜"}]}],
  amp:{target:"FTT-1",axis:"빛 환경 제어가 전체 일괄 조절에서 좌석 대응형 독립 구역 조절로 바뀌었다.",
   mechanism:"전기 신호로 투명도를 바꾸는 SPD-SmartGlass와 구역 분할 제어 구조가 결합되면서, 물리 덮개 없이도 루프 표면 자체를 여러 제어 단위로 나눌 수 있게 되었다.",
   limit:"구역은 좌석 단위에 머물러 있고 조절 단계도 4단계이며, 사용자의 활동 맥락을 자동으로 읽어 조절하지는 못한다.",
@@ -197,28 +222,57 @@ const EXAMPLE={
    {q:"왜 좌석별 빛 조건을 다르게 봐야 하는가?",a:"같은 차 안에서도 탑승자마다 수면, 독서, 감상 등 활동 맥락이 다르기 때문이다."},
    {q:"왜 활동 맥락이 조도 제어에 중요해지는가?",a:"공유 환경 안에서 한 사람의 최적 조건이 다른 사람에게는 방해 조건이 될 수 있기 때문이다."}],
   principle:"공유 환경에서 개인 활동 맥락이 다를 때, 환경의 제어 해상도를 높여 개인별 최적 조건을 분리 제공한다.",
-  model:"공유 자원·환경에서 사용자별 맥락 차이가 충돌할 때, 제어 단위와 정밀도를 높여 충돌을 분리된 최적 조건으로 전환한다."},
- reinforce:[{name:"신체 부위별 제어",desc:"좌석 단위 구역을 머리·눈·손 같은 신체 부위 단위로 더 잘게 나눈다."},
-  {name:"0~100% 연속 투명도",desc:"4단계를 연속값으로 바꿔 빛의 양을 미세하게 맞춘다."},
-  {name:"활동 감지 기반 자동 조절",desc:"사용자가 직접 고르던 조절을 활동 감지로 시스템이 먼저 설정한다."},
-  {name:"자세 따라 재편되는 동적 구역",desc:"고정 9구역 대신 탑승자 자세와 위치에 맞춰 구역 경계가 움직인다."}],
- expand:[{name:"헤드레스트 개인 음장 분리",domain:"소리",desc:"빛을 나누던 원리를 헤드레스트 스피커로 소리 환경에 옮긴다."},
-  {name:"시트 표면 체온·압력 구역 제어",domain:"시트·촉감",desc:"루프 구역 제어를 시트 표면의 온도·압력 구역으로 옮긴다."},
-  {name:"보행자용 구역별 의도 표현",domain:"차량 외부",desc:"실내 환경 분리를 차량 외부로 옮겨 방향마다 다른 대상에게 다른 신호를 준다."},
-  {name:"TOLED 정보 밀도 조절",domain:"디지털 인터페이스",desc:"물리 차단을 정보 차단으로 옮겨 좌석별 화면 정보량을 조절한다."}],
+  model:"공유 자원·환경에서 사용자별 맥락 차이가 충돌할 때, 제어 단위와 정밀도를 높여 충돌을 분리된 최적 조건으로 전환한다.",
+  parts:{cond:"여러 사람이 하나의 캐빈 환경을 공유",conflict:"한 사람의 최적 조건이 다른 사람의 방해 조건이 됨",method:"제어 단위를 쪼개고 단계를 늘려 해상도를 높임",value:"한 공간 안에서 개인별 최적 조건이 분리되어 공존"}},
+ reinforce:[{name:"신체 부위별 제어",type:"세분화",push:"좌석 단위 → 신체 부위 단위",desc:"좌석 단위 구역을 머리·눈·손 같은 신체 부위 단위로 더 잘게 나눈다."},
+  {name:"0~100% 연속 투명도",type:"연속값",push:"4단계 → 연속값",desc:"4단계를 연속값으로 바꿔 빛의 양을 미세하게 맞춘다."},
+  {name:"활동 감지 기반 자동 조절",type:"자동화",push:"직접 선택 → 활동 감지 설정",desc:"사용자가 직접 고르던 조절을 활동 감지로 시스템이 먼저 설정한다."},
+  {name:"자세 따라 재편되는 동적 구역",type:"가변",push:"고정 9구역 → 자세 추종 구역",desc:"고정 9구역 대신 탑승자 자세와 위치에 맞춰 구역 경계가 움직인다."},
+  {name:"개인별 조도 취향 학습",type:"개인 학습",push:"공통 단계표 → 개인 학습 곡선",desc:"사람마다 선호하는 밝기와 시간대 패턴을 학습해 구역별 기본값을 다르게 둔다."}],
+ expand:[{name:"헤드레스트 개인 음장 분리",domain:"소리",keep:"공유 환경의 제어 해상도 높이기",desc:"빛을 나누던 원리를 헤드레스트 스피커로 소리 환경에 옮긴다."},
+  {name:"시트 표면 체온·압력 구역 제어",domain:"시트·촉감",keep:"구역 단위 독립 제어",desc:"루프 구역 제어를 시트 표면의 온도·압력 구역으로 옮긴다."},
+  {name:"보행자용 구역별 의도 표현",domain:"차량 외부",keep:"대상별로 다른 조건을 분리 제공",desc:"실내 환경 분리를 차량 외부로 옮겨 방향마다 다른 대상에게 다른 신호를 준다."},
+  {name:"TOLED 정보 밀도 조절",domain:"디지털 인터페이스",keep:"투과량을 단계로 조절",desc:"물리 차단을 정보 차단으로 옮겨 좌석별 화면 정보량을 조절한다."},
+  {name:"탑승 전 개인 환경 예약",domain:"탑승 전",keep:"개인별 최적 조건 분리",desc:"탑승 전부터 좌석별 빛·온도 조건을 각자의 기기에서 미리 맞춰 둔다."}],
  directions:[
   {seed:"활동 감지 기반 자동 조절",type:"강화",question:"AI가 활동을 틀리게 읽었을 때, 사용자는 어떻게 주도권을 되찾는가?",
+   context:"야간 고속도로, 뒷좌석 한 명은 잠들고 다른 한 명은 책을 읽는 상황",
    hev:{h:"DMS와 Vital Sensing이 탑승자의 눈 감김·자세·심박 변화를 감지해 루프·조명·음향 구역 출력을 자동으로 바꾸고, 손바닥을 루프 쪽으로 드는 동작을 수동 복귀 신호로 받아들여",e:"자동 설정이 기본값으로 작동하다가 사용자 동작이 들어오면 해당 구역만 즉시 수동 제어로 넘어가도록 하여",v:"탑승자는 차가 먼저 알아서 맞추되 언제든 내 손으로 되돌릴 수 있는 실내를 믿고 맡긴다"},
+   ai:"눈 감김·자세·심박으로 활동을 판단하고, 오판 신호(수동 복귀 동작)를 학습해 다음 판단을 보정",
+   why_car:"좌석 위치가 고정된 캐빈에서 머리 위 루프 구역과 탑승자가 1:1로 대응한다",
    angle:"조도 자체를 나누는 대신, 빛이 필요한 활동만 국소적으로 보강하는 방식으로 바꾼다.",
-   aidv:{d2:"DMS, Vital Sensing, AI 캐빈 플랫폼, Ambient Light",d3:"졸음 감지, 수면 환경, 불편 자동 감지",d1:"제로클릭, 건강지능HQ"}},
+   aidv:{d1:"제로클릭, 건강지능HQ",d2:"DMS, Vital Sensing, AI 캐빈 플랫폼, Ambient Light",d3:"졸음 감지, 수면 환경, 불편 자동 감지"}},
   {seed:"헤드레스트 개인 음장 분리",type:"확장",question:"잠든 사람의 조용함과 깨어 있는 사람의 몰입은 어떻게 같은 실내에 공존하는가?",
+   context:"가족 장거리 이동, 아이는 자고 부모는 통화 중인 상황",
    hev:{h:"좌석별 헤드레스트 스피커와 AI Sound가 탑승자마다 다른 음원과 음량을 출력하고 옆 좌석 방향으로는 상쇄 음파를 내보내",e:"하나의 캐빈 스피커가 전체에 같은 소리를 퍼뜨리던 구조 대신 좌석 단위의 독립 음장을 형성하여",v:"탑승자는 함께 타고 있어도 서로의 시간을 방해하지 않는 각자의 방을 갖는다"},
+   ai:"좌석별 발화·수면 상태를 감지해 어느 좌석에 소리를 열고 닫을지 조율",
+   why_car:"좌석 간 거리가 1m 안팎인 닫힌 공간이라 개인 음장이 없으면 소리가 바로 섞인다",
    angle:"소리를 나누는 대신, 대화가 필요한 두 좌석만 연결하는 선택적 음장 결합으로 튼다.",
-   aidv:{d2:"헤드레스트 스피커, AI Sound, AI 캐빈 플랫폼",d3:"탑승자 간 충돌 조율, 수면 환경",d1:"1.5가구, 필코노미"}},
+   aidv:{d1:"1.5가구, 필코노미",d2:"헤드레스트 스피커, AI Sound, AI 캐빈 플랫폼",d3:"탑승자 간 충돌 조율, 수면 환경"}},
   {seed:"탑승자 간 관계 조율",type:"확장",question:"부부 싸움 중일 때 차량은 누구의 쾌적함을 우선해야 하는가?",
+   context:"주말 귀갓길, 앞좌석 두 사람의 대화가 날카로워진 상황",
    hev:{h:"차량이 대화 톤·발화 간격·시선 회피를 감지하고 좌석별 조도·공조·음량 구역을 서로 다른 값으로 분리하여",e:"한 사람의 설정이 공간 전체를 지배하던 구조 대신 갈등 상황에서 두 사람의 환경을 일시적으로 떼어 놓도록 하여",v:"탑승자는 같은 공간에 있으면서도 감정을 가라앉힐 거리를 확보한다"},
+   ai:"대화 톤과 시선 패턴으로 긴장도를 추정하고 두 좌석 환경의 분리 정도를 조율",
+   why_car:"두 사람이 내릴 수 없는 이동 중 공간이라 물리적 거리를 둘 방법이 환경 제어뿐이다",
    angle:"환경을 떼어 놓는 대신, 두 사람이 함께 볼 수 있는 중립적 화면 콘텐츠로 주의를 옮긴다.",
-   aidv:{d2:"DMS, AI 캐빈 플랫폼, Ambient Light, 헤드레스트 스피커",d3:"탑승자 간 충돌 조율",d1:"페이스테크, 필코노미"}}]
+   aidv:{d1:"페이스테크, 필코노미",d2:"DMS, AI 캐빈 플랫폼, Ambient Light, 헤드레스트 스피커",d3:"탑승자 간 충돌 조율"}},
+  {seed:"자세 따라 재편되는 동적 구역",type:"강화",question:"시트를 눕히는 순간, 빛의 구역은 누구를 따라가야 하는가?",
+   context:"자율주행 중 2열 시트를 풀플랫으로 눕혀 휴식하는 상황",
+   hev:{h:"시트 각도 센서와 캐빈 카메라가 탑승자의 머리·눈 위치를 추적해 루프 글라스의 구역 경계를 실시간으로 다시 그려",e:"좌석에 고정되던 빛 구역이 탑승자의 머리 위치를 따라 이동하도록 하여",v:"탑승자는 어떤 자세를 취해도 눈부심 없이 쉬는 자리가 따라온다고 체감한다"},
+   ai:"자세 변화와 시선 방향을 예측해 구역 재편 시점과 범위를 결정",
+   why_car:"자율주행 캐빈에서는 시트 자세가 수시로 바뀌어 고정 구역이 맞지 않게 된다",
+   angle:"구역을 움직이는 대신, 눈 위치에만 작은 차광 패치를 띄우는 방식으로 줄인다.",
+   aidv:{d1:"픽셀라이프, 제로클릭",d2:"AVS 비전 솔루션, TOLED 파노라마, AI 캐빈 플랫폼",d3:"수면 환경, 불편 자동 감지"}}],
+ check:[{item:"독립적인 Fact를 추출했는가",ok:true,note:"Fact 3개가 모두 FTT-1의 (1)(2)(3) 축에 대응한다."},
+  {item:"From이 기존 구조의 한계를 구체적으로 보여주는가",ok:true,note:"덮개·단일 구역·2단계로 물리 구조를 적었다."},
+  {item:"Trend에 기술명·수치·구조 변화가 있는가",ok:true,note:"SPD-SmartGlass, 9구역, 4단계를 포함했다."},
+  {item:"From과 Trend의 번호가 1:1로 대응하는가",ok:true,note:"(1)수단 (2)단위 (3)정밀도로 대응한다."},
+  {item:"H의 번호축이 E·V까지 이어지는가",ok:true,note:"E·V 모두 같은 번호를 유지했다."},
+  {item:"AR이 도메인 수준의 근원 원리에 닿았는가",ok:true,note:"3단계에서 공유 환경의 충돌로 정리했다."},
+  {item:"보편화 모델이 너무 넓지 않은가",ok:true,note:"제어 단위·정밀도라는 구조가 남아 있다."},
+  {item:"강화가 같은 축을 밀고, 확장이 다른 곳으로 옮겼는가",ok:true,note:"강화는 빛 안에서, 확장은 소리·시트·외부·정보로 옮겼다."},
+  {item:"방향 제목이 시드 고유의 질문인가",ok:true,note:"모두 상황이 담긴 질문형이다."},
+  {item:"AIDV 적용이 D1·D2·D3로 구체 연결되는가",ok:false,note:"D1 트렌드는 팀 데이터 코드로 다시 확인할 것."}]
 };
 
 const $=s=>document.querySelector(s);
@@ -233,48 +287,64 @@ const L=a=>Array.isArray(a)?a:[];
 const sh=(id,code,t,sub="")=>`<div class="sh"><h2><span class="code">${code}</span>${t}${sub?`<small>${esc(sub)}</small>`:""}</h2><button class="tb" data-png="${id}" type="button">PNG</button></div>`;
 
 function render(){
-  const d=data;
+  const d=data,a=d.amp||{},pt=a.parts||{};
   const ftts=L(d.ftts).map((f,i)=>`<section class="sheet" id="s-ftt${i?"-"+i:""}">${sh("s-ftt"+(i?"-"+i:""),"FTT",esc(f.id||"FTT-"+(i+1)),f.core)}
+    ${f.basis!==undefined?`<p class="basis"><span>From 기준</span>${ed(`ftts.${i}.basis`,"span")}</p>`:""}
     <div class="mx">
       <div class="ch"></div><div class="ch">FROM</div><div class="ch tr">TREND</div>
       ${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed(`ftts.${i}.from.${k}`,"div","fr")}<div class="tr">${ed(`ftts.${i}.trend.${k}`)}</div>`).join("")}
     </div>
-    <table class="map"><thead><tr><th>번호</th><th>From</th><th>Trend</th><th>변화</th></tr></thead><tbody>
-      ${L(f.map).map((m,j)=>`<tr><td>${fmt(m.n)}</td><td>${ed(`ftts.${i}.map.${j}.f`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.t`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.c`,"span")}</td></tr>`).join("")}
+    <table class="map"><thead><tr><th>번호</th><th>변화축</th><th>From</th><th>Trend</th><th>변화</th></tr></thead><tbody>
+      ${L(f.map).map((m,j)=>`<tr><td>${fmt(m.n)}</td><td>${ed(`ftts.${i}.map.${j}.axis`,"b")}</td><td>${ed(`ftts.${i}.map.${j}.f`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.t`,"span")}</td><td>${ed(`ftts.${i}.map.${j}.c`,"span")}</td></tr>`).join("")}
     </tbody></table></section>`).join("");
-  const a=d.amp||{};
+  const specs=L(d.case.specs);
+  const ck=L(d.check),okN=ck.filter(c=>c.ok).length;
   $("#out").innerHTML=`
-  <section class="sheet" id="s-case">${sh("s-case","FACT","사례와 Fact")}
+  <section class="sheet" id="s-case">${sh("s-case","FACT","사례와 Fact",L(d.facts).length+"개")}
     <div class="head">
-      <div>${ed("case.headline","h2","ttl")}<div class="src">${ed("case.title","span")} · ${ed("case.source","span")}</div></div>
-      <div>${d.img?`<figure class="fig"><img src="${d.img}" alt="사례 이미지"></figure>`:""}${ed("case.description","p","desc")}</div>
+      <div>${ed("case.headline","h2","ttl")}<div class="src">${ed("case.title","span")} · ${ed("case.source","span")}</div>
+        ${ed("case.description","p","desc")}</div>
+      <div>${d.img?`<figure class="fig"><img src="${d.img}" alt="사례 이미지"></figure>`:""}
+        ${specs.length?`<dl class="spec">${specs.map((s,i)=>`<div><dt>${ed(`case.specs.${i}.k`,"span")}</dt><dd>${ed(`case.specs.${i}.v`,"span")}</dd></div>`).join("")}</dl>`:""}</div>
     </div>
-    <ul class="facts">${L(d.facts).map((f,i)=>`<li><span class="x">Fact ${i+1}</span>${ed(`facts.${i}.core`,"b")}${ed(`facts.${i}.text`,"p")}</li>`).join("")}</ul>
+    <ul class="facts">${L(d.facts).map((f,i)=>`<li><span class="x">FACT ${String(i+1).padStart(2,"0")}${f.ftt?`<em>→ ${esc(f.ftt)}</em>`:""}</span>${ed(`facts.${i}.core`,"b")}${ed(`facts.${i}.text`,"p")}${f.why?`<p class="why">${ed(`facts.${i}.why`,"span")}</p>`:""}</li>`).join("")}</ul>
   </section>
   ${ftts}
   <section class="sheet" id="s-amp">${sh("s-amp","AR","T 해부와 근원 원리",a.target||"")}
     <div class="two">
-      <div class="kv"><div><span>변화축</span>${ed("amp.axis","p")}</div><div><span>메커니즘</span>${ed("amp.mechanism","p")}</div><div><span>한계</span>${ed("amp.limit","p")}</div></div>
-      <ol class="ar">${L(a.ar).map((s,i)=>`<li><span class="q">Q${i+1}</span>${ed(`amp.ar.${i}.q`,"b")}${ed(`amp.ar.${i}.a`,"p")}</li>`).join("")}</ol>
+      <div class="kv"><div><span>변화축</span>${ed("amp.axis","p")}</div><div><span>메커니즘</span>${ed("amp.mechanism","p")}</div><div><span>한계 · 강화의 출발점</span>${ed("amp.limit","p")}</div></div>
+      <div class="kv"><div><span>AR · WHY ${L(a.ar).length}회</span><ol class="ar">${L(a.ar).map((s,i)=>`<li><span class="q">Q${i+1}</span>${ed(`amp.ar.${i}.q`,"b")}${ed(`amp.ar.${i}.a`,"p")}</li>`).join("")}</ol></div></div>
     </div>
-    <div class="root"><span>근원 원리</span>${ed("amp.principle","p","big")}<span style="margin-top:6px">보편화 모델</span>${ed("amp.model","p","sm")}</div>
+    <div class="root"><span>근원 원리</span>${ed("amp.principle","p","big")}
+      <span style="margin-top:8px">보편화 모델</span>${ed("amp.model","p","sm")}
+      ${a.parts?`<div class="parts">${[["cond","상황·조건"],["conflict","충돌·한계"],["method","구조적 조정"],["value","새로운 가치"]].map(([k,l],i)=>`<div><span>${String(i+1).padStart(2,"0")} ${l}</span>${ed(`amp.parts.${k}`,"p")}</div>`).join("")}</div>`:""}
+    </div>
   </section>
-  <section class="sheet" id="s-seed">${sh("s-seed","SEED","강화·확장 시드")}
+  <section class="sheet" id="s-seed">${sh("s-seed","SEED","강화·확장 시드",L(d.reinforce).length+" + "+L(d.expand).length)}
     <div class="two seeds">
-      <div><h3>강화 <small>같은 축을 더 밀면</small></h3><ul class="sl">${L(d.reinforce).map((s,i)=>`<li>${ed(`reinforce.${i}.name`,"b")}${ed(`reinforce.${i}.desc`,"p")}</li>`).join("")}</ul></div>
-      <div><h3>확장 <small>이 원리를 다른 데 쓰면</small></h3><ul class="sl">${L(d.expand).map((s,i)=>`<li><div><span class="tag">${esc(s.domain)}</span>${ed(`expand.${i}.name`,"b")}</div>${ed(`expand.${i}.desc`,"p")}</li>`).join("")}</ul></div>
+      <div><h3>강화 <small>같은 축을 극단으로</small></h3><ul class="sl">${L(d.reinforce).map((s,i)=>`<li><div>${s.type?`<span class="tag">${esc(s.type)}</span>`:""}${ed(`reinforce.${i}.name`,"b")}</div>${s.push?`<p class="push">${ed(`reinforce.${i}.push`,"span")}</p>`:""}${ed(`reinforce.${i}.desc`,"p")}</li>`).join("")}</ul></div>
+      <div><h3>확장 <small>원리를 다른 곳으로</small></h3><ul class="sl">${L(d.expand).map((s,i)=>`<li><div><span class="tag">${esc(s.domain)}</span>${ed(`expand.${i}.name`,"b")}</div>${s.keep?`<p class="push">유지한 구조 · ${ed(`expand.${i}.keep`,"span")}</p>`:""}${ed(`expand.${i}.desc`,"p")}</li>`).join("")}</ul></div>
     </div>
   </section>
-  <section class="sheet" id="s-dir">${sh("s-dir","DIR","방향 제안")}
+  <section class="sheet" id="s-dir">${sh("s-dir","DIR","방향 제안",L(d.directions).length+"개")}
     <div class="dirs">${L(d.directions).map((r,i)=>`<article class="dir">
-      <div class="qh"><span class="meta"><span class="tag">${esc(r.type)}</span>${esc(r.seed)}</span>${ed(`directions.${i}.question`,"h3")}</div>
-      <div><div class="hev3">${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed(`directions.${i}.hev.${k}`)}`).join("")}</div>
-        <p class="angle"><span>다른 각도</span>${ed(`directions.${i}.angle`,"span")}</p></div>
-      <div class="aidv">${["d1","d2","d3"].map(k=>`<div><b>${k.toUpperCase()}</b>${ed(`directions.${i}.aidv.${k}`,"span")}</div>`).join("")}</div>
+      <div class="qh"><span class="meta"><span class="tag">${esc(r.type)}</span>${esc(r.seed)}</span>${ed(`directions.${i}.question`,"h3")}
+        ${r.context?`<p class="ctx">${ed(`directions.${i}.context`,"span")}</p>`:""}</div>
+      <div class="hev3">${["h","e","v"].map(k=>`<div class="rk">${k.toUpperCase()}</div>${ed(`directions.${i}.hev.${k}`)}`).join("")}</div>
+      <dl class="dmeta">
+        ${r.ai?`<div><dt>AI의 역할</dt><dd>${ed(`directions.${i}.ai`,"span")}</dd></div>`:""}
+        ${r.why_car?`<div><dt>왜 차량인가</dt><dd>${ed(`directions.${i}.why_car`,"span")}</dd></div>`:""}
+        <div><dt>다른 각도</dt><dd>${ed(`directions.${i}.angle`,"span")}</dd></div>
+        ${["d1","d2","d3"].map(k=>`<div><dt>${k.toUpperCase()} ${({d1:"트렌드",d2:"기술",d3:"니즈"})[k]}</dt><dd>${ed(`directions.${i}.aidv.${k}`,"span")}</dd></div>`).join("")}
+      </dl>
     </article>`).join("")}</div>
-  </section>`;
+  </section>
+  ${ck.length?`<section class="sheet" id="s-check">${sh("s-check","QA","최종 체크리스트",okN+" / "+ck.length+" 통과")}
+    <ul class="ck">${ck.map((c,i)=>`<li class="${c.ok?"ok":"no"}"><span class="mk">${c.ok?"통과":"보완"}</span>${ed(`check.${i}.item`,"b")}${ed(`check.${i}.note`,"p")}</li>`).join("")}</ul>
+  </section>`:""}`;
   $("#curCase").textContent=d.case.title||"사례";
   const P=[["s-case","Fact 추출",L(d.facts).length+"개"],...L(d.ftts).map((f,i)=>["s-ftt"+(i?"-"+i:""),f.id+" H-E-V·매핑",L(f.map).length+"축"]),["s-amp","T 해부·AR·근원 원리",L(a.ar).length+"단계"],["s-seed","강화·확장 시드",L(d.reinforce).length+"+"+L(d.expand).length],["s-dir","방향 제안",L(d.directions).length+"개"]];
+  if(ck.length)P.push(["s-check","최종 체크리스트",okN+"/"+ck.length]);
   $("#pipe").innerHTML=P.map((p,i)=>`<li><a href="#${p[0]}"><span class="k">${String(i+1).padStart(2,"0")}</span>${esc(p[1])}<span class="c">${p[2]}</span></a></li>`).join("");
 }
 
@@ -287,25 +357,27 @@ $("#out").addEventListener("focusout",e=>{const el=e.target.closest("[data-p]");
   const v=htmlToMd(el.innerHTML);if(v!==get(data,el.dataset.p)){put(data,el.dataset.p,v);saveHist()}});
 
 function toMarkdown(d){
-  const a=d.amp||{};
+  const a=d.amp||{},pt=a.parts||{};
   return `# ${(d.case.headline||"").replace(/\n/g," ")}
 
 ${d.case.title}${d.case.source?` · ${d.case.source}`:""}
 
 ${d.case.description}
 
+${L(d.case.specs).map(s=>`- ${s.k}: ${s.v}`).join("\n")}
+
 ## Fact
-${L(d.facts).map((f,i)=>`${i+1}. **${f.core}** ${f.text}`).join("\n")}
+${L(d.facts).map((f,i)=>`${i+1}. **${f.core}** ${f.text}${f.why?` (근거: ${f.why})`:""}${f.ftt?` → ${f.ftt}`:""}`).join("\n")}
 
 ${L(d.ftts).map(f=>`## ${f.id} · ${f.core}
-
+${f.basis?`From 기준: ${f.basis}\n`:""}
 | | From | Trend |
 |---|---|---|
 ${["h","e","v"].map(k=>`| **${k.toUpperCase()}** | ${f.from[k]} | ${f.trend[k]} |`).join("\n")}
 
-| 번호 | From | Trend | 변화 |
-|---|---|---|---|
-${L(f.map).map(m=>`| ${m.n} | ${m.f} | ${m.t} | ${m.c} |`).join("\n")}
+| 번호 | 변화축 | From | Trend | 변화 |
+|---|---|---|---|---|
+${L(f.map).map(m=>`| ${m.n} | ${m.axis||""} | ${m.f} | ${m.t} | ${m.c} |`).join("\n")}
 `).join("\n")}
 ## T 해부 (${a.target||""})
 - 변화축: ${a.axis}
@@ -318,16 +390,17 @@ ${L(a.ar).map((s,i)=>`Q${i+1}. ${s.q}\nA${i+1}. ${s.a}`).join("\n\n")}
 **근원 원리** ${a.principle}
 
 **보편화 모델** ${a.model}
+${a.parts?`- 상황·조건: ${pt.cond}\n- 충돌·한계: ${pt.conflict}\n- 구조적 조정: ${pt.method}\n- 새로운 가치: ${pt.value}`:""}
 
 ## 강화 시드
-${L(d.reinforce).map(s=>`- **${s.name}** ${s.desc}`).join("\n")}
+${L(d.reinforce).map(s=>`- **${s.name}**${s.type?` [${s.type}]`:""} ${s.push?`(${s.push}) `:""}${s.desc}`).join("\n")}
 
 ## 확장 시드
-${L(d.expand).map(s=>`- **${s.name}** (${s.domain}) ${s.desc}`).join("\n")}
+${L(d.expand).map(s=>`- **${s.name}** [${s.domain}] ${s.keep?`(유지한 구조: ${s.keep}) `:""}${s.desc}`).join("\n")}
 
 ## 방향 제안
 ${L(d.directions).map(r=>`### ${r.question}
-${r.type} · ${r.seed}
+${r.type} · ${r.seed}${r.context?`\n상황: ${r.context}`:""}
 
 | | 시나리오 |
 |---|---|
@@ -335,9 +408,13 @@ ${r.type} · ${r.seed}
 | **E** | ${r.hev.e} |
 | **V** | ${r.hev.v} |
 
-- 다른 각도: ${r.angle}
-- AIDV: D1 ${r.aidv.d1} / D2 ${r.aidv.d2} / D3 ${r.aidv.d3}
-`).join("\n")}`;
+${r.ai?`- AI의 역할: ${r.ai}\n`:""}${r.why_car?`- 왜 차량인가: ${r.why_car}\n`:""}- 다른 각도: ${r.angle}
+- D1 트렌드: ${r.aidv.d1}
+- D2 기술: ${r.aidv.d2}
+- D3 니즈: ${r.aidv.d3}
+`).join("\n")}
+${L(d.check).length?`## 최종 체크리스트
+${L(d.check).map(c=>`- [${c.ok?"x":" "}] ${c.item} — ${c.note}`).join("\n")}`:""}`;
 }
 
 const PROMPT=(caseText,hasImg)=>`너는 LG AIDV(AI-Defined Vehicle) 산학 프로젝트의 FTT(From-Trend-To) 분석가다. 아래 사례를 FTT 작성 가이드와 HEV 작성 가이드에 따라 끝까지 분석하고, 마지막에 JSON 하나만 출력한다.
@@ -349,24 +426,27 @@ ${hasImg?"\n(사례 이미지를 이 대화에 함께 첨부했다. 이미지도
 FTT는 사례 요약이 아니다. 사례 고유의 구조적 전환 원리를 뽑고, 그 원리를 AIDV 차량 경험으로 증폭할 시드까지 만드는 것이다. T는 솔루션이 아니라 시드다. "개인화가 중요하다", "편리해진다"처럼 어느 사례에나 붙는 결론은 실패다.
 
 [진행 순서]
-1. Fact 추출: 사례에서 기존과 구조적으로 다른 변화만 뽑는다. 서로 독립적인 변화축만 남긴다(단순한 사례 1~2개, 복잡한 사례 3~5개). 각 Fact는 기존 대비 무엇이 구조적으로 달라졌는지, 다른 Fact를 빼도 성립하는지 통과해야 한다.
-2. FTT 생성: 독립적인 변화축 하나당 FTT 하나(보통 1~2개). From = Trend 직전의 가장 앞선 양산 수준(SOTA)의 작동 구조와 한계. "나빴다/불편했다" 같은 평가어 금지. Trend = 사례가 바꾼 것. 기술명·수치·물리 구조·제어 단위·작동 방식·사용자 역할 변화를 넣는다.
+0. 사례 스펙: 기술명, 제어 단위·수치, 작동 방식, 사용자 역할을 사례에서 확인되는 만큼만 정리한다.
+1. Fact 추출: 사례에서 기존과 구조적으로 다른 변화만 뽑는다. 서로 독립적인 변화축만 남긴다(단순한 사례 1~2개, 복잡한 사례 3~5개). 각 Fact는 기존 대비 무엇이 구조적으로 달라졌는지(why), 다른 Fact를 빼도 성립하는지 통과해야 하고, 어느 FTT로 이어지는지 적는다.
+2. FTT 생성: 독립적인 변화축 하나당 FTT 하나(보통 1~2개). From = Trend 직전의 가장 앞선 양산 수준(SOTA)의 작동 구조와 한계. basis에 From으로 잡은 직전 방식을 적는다. "나빴다/불편했다" 같은 평가어 금지. Trend = 사례가 바꾼 것. 기술명·수치·물리 구조·제어 단위·작동 방식·사용자 역할 변화를 넣는다.
 3. H-E-V
  - H(How): 관찰 가능한 팩트만. 구조·속성·위치·단위·센서·출력·입력·사용자 행위. "편하게/자연스럽게/AI가 알아서" 금지. 반드시 "~하여"로 끝난다.
  - E(Effect): H 때문에 생기는 객관적 작동 변화만(정보 흐름, 물리 전달, 제어 단위, 인지 구조, 조작 단계). "편해진다/안심한다/별도 조작 없이" 같은 사용자 효용은 E에 쓰지 않는다. 반드시 "~하여"로 끝난다.
  - V(Value): E의 결과로 사용자가 얻는 가치와 인식 변화. 차량을 어떻게 새롭게 인식하게 되는지까지. 반드시 "~한다"로 끝난다.
  - H에 없는 것이 E에, E에 없는 것이 V에 튀어나오면 안 된다.
-4. 번호 매핑(가장 중요): H 안의 핵심 요소를 (1)(2)(3)으로 쪼갠다. From의 (n)과 Trend의 (n)은 반드시 같은 축을 가리키며 1:1로 대응한다. 한쪽에만 있는 번호 금지. H의 번호 축은 E와 V에서도 같은 번호로 이어진다. 번호마다 매핑 노트(From 요소 → Trend 요소, 무엇이 무엇으로 바뀌었나 한 줄)를 쓴다.
+4. 번호 매핑(가장 중요): H 안의 핵심 요소를 (1)(2)(3)으로 쪼갠다. From의 (n)과 Trend의 (n)은 반드시 같은 축을 가리키며 1:1로 대응한다. 한쪽에만 있는 번호 금지. H의 번호 축은 E와 V에서도 같은 번호로 이어진다. 번호마다 매핑 노트(변화축 이름, From 요소 → Trend 요소, 무엇이 무엇으로 바뀌었나 한 줄)를 쓴다.
 5. T 해부(가장 강한 FTT 하나를 깊게): 변화축(무엇이 무엇으로 바뀌었나 한 문장), 메커니즘(왜 가능해졌나, 기술·구조 원인), 한계(아직 못 간 지점, 강화의 출발점).
 6. AR: Why를 3~4회 반복해 근원 원리에 닿는다. 도메인 수준의 구체성을 유지하고 철학으로 올라가지 않는다.
-7. 근원 원리 한 줄, 보편화 모델 한 줄: "[상황/조건]에서 [충돌/한계]가 발생할 때, [구조적 조정 방식]을 통해 [새로운 가치/상태]로 전환한다." 너무 넓지 않게 구조를 남긴다.
-8. 강화 시드 4~6개: 같은 변화축을 극단으로 민다(더 잘게, 연속값, 수동→자동, 보편→개인 학습, 고정→가변, 일부→전체). 감각·대상·도메인이 바뀌면 강화가 아니다.
-9. 확장 시드 4~6개: 근원 원리를 다른 감각(소리·온도·향·촉감), 다른 대상(시트·도어·대시보드·스티어링), 관계(탑승자 간 조율), 다른 시간(탑승 전·정차 중·하차 후), 차량 외부(보행자·도로·인프라), 디지털 인터페이스로 옮긴다. 원리의 구조는 유지한다. domain에 옮긴 곳을 짧게 쓴다.
-10. 방향 제안 3개(강화에서 1개 이상, 확장에서 1개 이상): 제목은 "맥락 적용", "감각 전환" 같은 카테고리가 아니라 그 시드만의 도발적 질문. 각 방향마다 차량 안에서 실제로 벌어지는 시나리오 HEV(같은 어미 규칙), 축을 살짝 튼 다른 각도, AIDV 적용(D1 트렌드 / D2 기술 / D3 니즈를 구체 이름으로).
+7. 근원 원리 한 줄, 보편화 모델 한 줄과 그 4파트(상황·조건 / 충돌·한계 / 구조적 조정 / 새로운 가치): "[상황/조건]에서 [충돌/한계]가 발생할 때, [구조적 조정 방식]을 통해 [새로운 가치/상태]로 전환한다." 너무 넓지 않게 구조를 남긴다.
+8. 강화 시드 5~6개: 같은 변화축을 극단으로 민다(세분화, 연속값, 자동화, 개인 학습, 가변, 전체). 각 시드에 유형과 "Trend 값 → 밀어붙인 값"을 쓴다. 감각·대상·도메인이 바뀌면 강화가 아니다.
+9. 확장 시드 5~6개: 근원 원리를 다른 감각(소리·온도·향·촉감), 다른 대상(시트·도어·대시보드·스티어링), 관계(탑승자 간 조율), 다른 시간(탑승 전·정차 중·하차 후), 차량 외부(보행자·도로·인프라), 디지털 인터페이스로 옮긴다. 원리의 구조는 유지한다. domain에 옮긴 곳, keep에 유지한 원리 구조를 쓴다.
+10. 방향 제안 4개(강화에서 2개, 확장에서 2개): 제목은 "맥락 적용", "감각 전환" 같은 카테고리가 아니라 그 시드만의 도발적 질문. 각 방향마다 차량 안에서 실제로 벌어지는 시나리오 HEV(같은 어미 규칙), 축을 살짝 튼 다른 각도, AIDV 적용(D1 트렌드 / D2 기술 / D3 니즈를 구체 이름으로).
  - D2 기술 예: DMS, Vital Sensing, AI Sound, 헤드레스트 스피커, AI 캐빈 플랫폼, ThinQ, TOLED 파노라마, Shy Tech, AR HUD, Ambient Light, AVS 비전 솔루션
  - D1 트렌드 예: 1.5가구, 제로클릭, 필코노미, 건강지능HQ, 픽셀라이프, 페이스테크
  - D3 니즈 예: 졸음 감지, 탑승자 간 충돌 조율, 수면 환경, 불편 자동 감지
- - AI가 감지·판단·예측·조율하는 대상을 명확히 쓰고, 왜 차량이어야 하는지(좌석·캐빈·주행·도착·동승자·감각 환경)가 드러나야 한다.
+ - 각 방향에 상황(언제·누가·어디서 한 줄), AI의 역할(감지·판단·예측·조율하는 대상), 왜 차량이어야 하는지(좌석·캐빈·주행·도착·동승자·감각 환경)를 따로 쓴다.
+11. 최종 체크리스트: 아래 10개 항목을 네 결과에 스스로 적용해 통과(ok:true) 또는 보완(ok:false)과 한 줄 근거를 쓴다. 억지로 다 통과시키지 않는다.
+ 독립적인 Fact를 추출했는가 / From이 기존 구조의 한계를 구체적으로 보여주는가 / Trend에 기술명·수치·구조 변화가 있는가 / From과 Trend의 번호가 1:1로 대응하는가 / H의 번호축이 E·V까지 이어지는가 / AR이 도메인 수준의 근원 원리에 닿았는가 / 보편화 모델이 너무 넓지 않은가 / 강화가 같은 축을 밀고 확장이 다른 곳으로 옮겼는가 / 방향 제목이 시드 고유의 질문인가 / AIDV 적용이 D1·D2·D3로 구체 연결되는가
 
 [좋은 예시: Mercedes-Benz SKY CONTROL]
 From H: (1)물리적 덮개를 (2)전체 단일 구역에 (3)2단계(열림·닫힘)로 조절하여
@@ -379,13 +459,14 @@ Trend H: (1)전기 신호 기반 스마트 글라스를 (2)9개 독립 구역으
 
 [출력]
 설명 없이 아래 JSON 하나만, 코드 블록 하나로 출력한다.
-{"case":{"title":"짧은 사례명","source":"브랜드·기술(모르면 빈 문자열)","headline":"","description":"3~4문장, 사실만"},
-"facts":[{"core":"변화 핵심 2~4단어","text":"한 문장"}],
-"ftts":[{"id":"FTT-1","core":"변화 핵심 2~4단어","from":{"h":"(1)… (2)… (3)…하여","e":"(1)… (2)…하여","v":"(1)… (2)…한다"},"trend":{"h":"","e":"","v":""},"map":[{"n":"(1)","f":"From 요소","t":"Trend 요소","c":"무엇이 무엇으로 바뀌었나"}]}],
-"amp":{"target":"FTT-1","axis":"","mechanism":"","limit":"","ar":[{"q":"왜 …?","a":"…때문이다."}],"principle":"","model":""},
-"reinforce":[{"name":"","desc":"한 문장"}],
-"expand":[{"name":"","domain":"","desc":"한 문장"}],
-"directions":[{"seed":"시드 이름","type":"강화 또는 확장","question":"","hev":{"h":"","e":"","v":""},"angle":"","aidv":{"d1":"","d2":"","d3":""}}]}`;
+{"case":{"title":"짧은 사례명","source":"브랜드·기술(모르면 빈 문자열)","headline":"","description":"3~4문장, 사실만","specs":[{"k":"기술","v":""},{"k":"제어 단위·수치","v":""},{"k":"작동 방식","v":""},{"k":"사용자 역할","v":""}]},
+"facts":[{"core":"변화 핵심 2~4단어","text":"한 문장","why":"기존 대비 무엇이 구조적으로 달라졌는지 한 문장","ftt":"FTT-1"}],
+"ftts":[{"id":"FTT-1","core":"변화 핵심 2~4단어","basis":"From으로 잡은 직전 방식(제품·기술명)","from":{"h":"(1)… (2)… (3)…하여","e":"(1)… (2)…하여","v":"(1)… (2)…한다"},"trend":{"h":"","e":"","v":""},"map":[{"n":"(1)","axis":"변화축 이름(예: 제어 수단)","f":"From 요소","t":"Trend 요소","c":"무엇이 무엇으로 바뀌었나"}]}],
+"amp":{"target":"FTT-1","axis":"","mechanism":"","limit":"","ar":[{"q":"왜 …?","a":"…때문이다."}],"principle":"","model":"","parts":{"cond":"상황·조건","conflict":"충돌·한계","method":"구조적 조정 방식","value":"새로운 가치·상태"}},
+"reinforce":[{"name":"","type":"세분화|연속값|자동화|개인 학습|가변|전체 중 하나","push":"Trend 값 → 밀어붙인 값","desc":"한 문장"}],
+"expand":[{"name":"","domain":"옮긴 감각·대상·시간·공간","keep":"유지한 원리 구조","desc":"한 문장"}],
+"directions":[{"seed":"시드 이름","type":"강화 또는 확장","question":"","context":"언제·누가·어디서 한 줄","hev":{"h":"","e":"","v":""},"ai":"AI가 감지·판단·예측·조율하는 대상","why_car":"왜 차량이어야 하는가 한 줄","angle":"","aidv":{"d1":"","d2":"","d3":""}}],
+"check":[{"item":"","ok":true,"note":""}]}`;
 
 const valid=o=>o?.case&&L(o.ftts).length&&o.ftts.every(f=>f.from&&f.trend);
 function setStatus(t,err){const s=$("#status");s.textContent=t;s.classList.toggle("err",!!err)}
@@ -394,7 +475,7 @@ function parseResult(raw){
   let o;try{o=JSON.parse(raw.slice(a,b+1))}catch(e){throw{message:"답을 읽지 못했어요. 답이 중간에 끊겼다면 AI에게 '이어서'라고 한 뒤 전체를 붙여 주세요."}}
   if(!valid(o))throw{message:"FTT가 빠져 있어요. AI에게 '형식 그대로 JSON만 다시'라고 해 주세요."};
   o.facts=L(o.facts);o.reinforce=L(o.reinforce);o.expand=L(o.expand);o.directions=L(o.directions);o.amp=o.amp||{};o.amp.ar=L(o.amp.ar);
-  o.ftts.forEach(f=>{f.map=L(f.map)});o.directions.forEach(r=>{r.hev=r.hev||{};r.aidv=r.aidv||{}});return o;
+  o.ftts.forEach(f=>{f.map=L(f.map)});o.check=L(o.check);o.case.specs=L(o.case.specs);o.directions.forEach(r=>{r.hev=r.hev||{};r.aidv=r.aidv||{}});return o;
 }
 $("#copyPrompt").onclick=async()=>{
   const text=$("#caseIn").value.trim();if(!text){setStatus("사례를 먼저 넣어 주세요.",true);return}
